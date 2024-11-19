@@ -15,15 +15,9 @@ function App() {
               <Route path="/hola" element={<DashboardPage />} />
               <Route path="/" element={<DashboardPage />} />
               <Route path="/" element={<DashboardPage />} />
-
             </Route>
 
-            <Route
-              path="*"
-              element={
-               <ButtonBackToHome/>
-              }
-            ></Route>
+            <Route path="*" element={<ButtonBackToHome />}></Route>
           </Routes>
         </>
       </BrowserRouter>
