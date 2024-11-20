@@ -25,14 +25,14 @@ const TaskListDashboard = ({ data }: { data: CustomTask[] }) => {
 
             <div style={{ display: "flex" }}>
               <ButtonGroup>
-                <Button
+                {/* <Button
                   style={{
                     color: "var(--primary-color)",
                     borderColor: "var(--primary-color)",
                   }}
                 >
                   Check
-                </Button>
+                </Button> */}
 
                 <Button style={{ color: "red", borderColor: "red" }}>
                   Delete
