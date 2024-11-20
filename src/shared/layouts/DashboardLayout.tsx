@@ -24,7 +24,7 @@ const DashboardLayout = () => {
         }}
       >
         <CustomHeaderPage />Prueba
-        <div style={{ height: "95%", overflowY: "auto",  padding: "20px" }}>
+        <div style={{ height: "95%",    }}>
           <Outlet />
         </div>
       </div>
