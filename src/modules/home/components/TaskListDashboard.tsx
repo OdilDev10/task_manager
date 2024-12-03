@@ -9,8 +9,14 @@ const TaskListDashboard = ({ data }: { data: CustomTask[] }) => {
   return (
     <>
       <List
-        pagination={{ position: "bottom", align: "center" }}
+        pagination={{ position: "bottom", align: "center", pageSize: 6 }}
         dataSource={data}
+        header={
+          <>
+            <h3>Listado</h3>
+          </>
+        }
+        itemLayout="horizontal"
         renderItem={(item, index) => (
           <List.Item>
             <List.Item.Meta

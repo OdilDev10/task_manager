@@ -8,10 +8,11 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <>
+        <> 
           <Routes>
             <Route element={<DashboardLayout />}>
               <Route path="/" element={<DashboardPage />} />
+
             </Route>
 
             <Route path="*" element={<ButtonBackToHome />}></Route>

@@ -1,7 +1,7 @@
 
 const CustomFooterPage = () => {
   return (
-    <div style={{display: "flex", justifyContent: "center"}}>Task Manager Odil</div>
+    <div style={{display: "flex", justifyContent: "center"}}>Task Manager</div>
   )
 }
 

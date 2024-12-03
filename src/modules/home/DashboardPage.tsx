@@ -1,10 +1,17 @@
-import { Button, Col, Form, Input, Radio } from "antd";
-import TaskListDashboard from "./components/TaskListDashboard";
+import { Button, Form, Input } from "antd";
 import CustomTabs from "../../shared/components/CustomTabs";
+import { postCreateUser } from "../../shared/services/userServices";
+import CompletedTasks from "./components/CompletedTasks";
 import ContainerTask from "./components/ContainerTask";
-import UsersList from "../users/UsersList";
+import TableUsers from "./components/TableUsers";
 
 const DashboardPage = () => {
+  const [form] = Form.useForm();
+
+  const onFinish = async (values: any) => {
+    console.log(values, form.validateFields());
+    await postCreateUser(values);
+  };
   return (
     <div>
       <CustomTabs
@@ -13,51 +20,27 @@ const DashboardPage = () => {
           {
             key: "Tab1",
             label: "Hechas",
+            children: <CompletedTasks listado={[]} />,
+          },
+          {
+            key: "Tab2",
+            label: "Pendientes",
+            children: <CompletedTasks listado={[]} />,
+          },
+          {
+            key: "Tab3",
+            label: "Canceladas",
+            children: <CompletedTasks listado={[]} />,
+          },
+          {
+            key: "Tab4",
+            label: "Usuarios",
             children: (
-              <ContainerTask styles={{ overflowY: "auto", height: "75vh" }}>
+              <ContainerTask>
                 <div style={{ flex: 3 }}>
-                  <TaskListDashboard
-                    data={[
-                      {
-                        title: "Ant Design Title 1",
-                      },
-                      {
-                        title: "Ant Design Title 2",
-                      },
-                      {
-                        title: "Ant Design Title 3",
-                      },
-                      {
-                        title: "Ant Design Title 4",
-                      },
-                      {
-                        title: "Ant Design Title 1",
-                      },
-                      {
-                        title: "Ant Design Title 2",
-                      },
-                      {
-                        title: "Ant Design Title 3",
-                      },
-                      {
-                        title: "Ant Design Title 4",
-                      },
-                      {
-                        title: "Ant Design Title 1",
-                      },
-                      {
-                        title: "Ant Design Title 2",
-                      },
-                      {
-                        title: "Ant Design Title 3",
-                      },
-                      {
-                        title: "Ant Design Title 4",
-                      },
-                    ]}
-                  />
+                  <TableUsers />
                 </div>
-                <div style={{ flex: 1, position: "relative", padding: "20px" }}>
+                <div style={{ flex: 1 }}>
                   <Form
                     style={{
                       padding: "10px",
@@ -68,135 +51,65 @@ const DashboardPage = () => {
                       position: "fixed",
                       top: "20%",
                     }}
+                    form={form}
+                    onFinish={onFinish}
                     layout="vertical">
                     <Form.Item
-                      name={"title"}
-                      label={"Title"}
+                      name={"name"}
+                      label={"Name"}
                       rules={[
                         {
-                          min: 3,
-                          max: 50,
-                          message: "Title must be between 3 and 50 characters",
+                          min: 1,
+                          max: 100,
+                          message: "Name must be between 1 and 100 characters",
                         },
-                        { required: true, message: "Title is required" },
+                        { required: true, message: "Name is required" },
                         {
-                          pattern: /^[a-zA-Z0-9\s]+$/,
-                          message:
-                            "Only letters, numbers, and spaces are allowed",
+                          pattern: /^[a-zA-Z\s]+$/,
+                          message: "Only letters and spaces are allowed",
                         },
                       ]}>
                       <Input />
                     </Form.Item>
                     <Form.Item
-                      name={"description"}
-                      label={"Description"}
+                      name={"lastName"}
+                      label={"Last Name"}
                       rules={[
                         {
-                          pattern: /^[a-zA-Z0-9\s]+$/,
+                          min: 1,
+                          max: 100,
                           message:
-                            "Only letters, numbers, and spaces are allowed",
+                            "Last name must be between 1 and 100 characters",
                         },
-                        // {
-                        //   validator: (_, value) =>
-                        //     value && value.includes("safe")
-                        //       ? Promise.resolve()
-                        //       : Promise.reject(
-                        //           new Error(
-                        //             "The input must contain the word 'safe'"
-                        //           )
-                        //         ),
-                        // },
-
-                        { required: true, message: "Description is required" },
+                        { required: true, message: "Last name is required" },
                         {
-                          min: 10,
-                          message:
-                            "Description must have at least 10 characters",
+                          pattern: /^[a-zA-Z\s]+$/,
+                          message: "Only letters and spaces are allowed",
                         },
                       ]}>
-                      <Input.TextArea
-                        size="large"
-                        style={{ height: "200px", maxHeight: "350px" }}
-                      />
+                      <Input />
+                    </Form.Item>
+                    <Form.Item
+                      name={"email"}
+                      label={"Email"}
+                      rules={[
+                        {
+                          type: "email",
+                          message: "The input is not valid E-mail!",
+                        },
+                        { required: true, message: "Email is required" },
+                      ]}>
+                      <Input />
                     </Form.Item>
 
-                    <Form.Item
-                      name={"status"}
-                      label={"Status"}
-                      rules={
-                        [
-                          // {
-                          //   min: 3,
-                          //   max: 50,
-                          //   message: "Title must be between 3 and 50 characters",
-                          // },
-                          // { required: true, message: "Title is required" },
-                          // {
-                          //   pattern: /^[a-zA-Z0-9\s]+$/,
-                          //   message:
-                          //     "Only letters, numbers, and spaces are allowed",
-                          // },
-                        ]
-                      }>
-                      <Radio.Group>
-                        <Radio
-                          value={1}
-                          style={{ color: "var(--primary-color)" }}>
-                          Ready
-                        </Radio>
-                        <Radio value={2} style={{ color: "orange" }}>
-                          Earring
-                        </Radio>
-                        <Radio value={3} style={{ color: "red" }}>
-                          Canceled
-                        </Radio>
-                      </Radio.Group>
-                    </Form.Item>
                     <Button
                       type="primary"
                       htmlType="submit"
                       style={{ width: "100%" }}>
-                      Send
+                      Create user
                     </Button>
                   </Form>
                 </div>
-              </ContainerTask>
-            ),
-          },
-          {
-            key: "Tab2",
-            label: "Pendientes",
-            children: (
-              <ContainerTask>
-                <div style={{ flex: 3 }}>
-                  <TaskListDashboard data={[]} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <Form></Form>
-                </div>
-              </ContainerTask>
-            ),
-          },
-          {
-            key: "Tab3",
-            label: "Canceladas",
-            children: (
-              <ContainerTask>
-                <div style={{ flex: 3 }}>
-                  <TaskListDashboard data={[]} />
-                </div>
-                <div style={{ flex: 1 }}>
-                  <Form></Form>
-                </div>
-              </ContainerTask>
-            ),
-          },
-          {
-            key: "Tab4",
-            label: "Users",
-            children: (
-              <ContainerTask>
-                <UsersList />
               </ContainerTask>
             ),
           },
