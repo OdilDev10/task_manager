@@ -4,14 +4,37 @@ import { postCreateUser } from "../../shared/services/userServices";
 import CompletedTasks from "./components/CompletedTasks";
 import ContainerTask from "./components/ContainerTask";
 import TableUsers from "./components/TableUsers";
+import { TaskInterface } from "../../shared/interfaces/TaskInterface";
+import { useState, useEffect } from "react";
+import { getAllTasks } from "../../shared/services/taskServices";
 
 const DashboardPage = () => {
   const [form] = Form.useForm();
+  const [completedTasks, setCompletedTasks] = useState<TaskInterface[]>([]);
 
   const onFinish = async (values: any) => {
     console.log(values, form.validateFields());
     await postCreateUser(values);
   };
+
+  const dtoTasks = (data: any[]) => {
+    let results = data.map((item) => {
+      return {
+        id: item?.id || "",
+        title: item?.title || "",
+        content: item?.content || "",
+        status: item?.status || "",
+      };
+    });
+    return results;
+  };
+
+  useEffect(() => {
+    getAllTasks().then((data) => {
+      setCompletedTasks(dtoTasks(data));
+      console.log(data);
+    });
+  }, []);
   return (
     <div>
       <CustomTabs
@@ -20,17 +43,17 @@ const DashboardPage = () => {
           {
             key: "Tab1",
             label: "Hechas",
-            children: <CompletedTasks listado={[]} />,
+            children: <CompletedTasks listado={completedTasks} />,
           },
           {
             key: "Tab2",
             label: "Pendientes",
-            children: <CompletedTasks listado={[]} />,
+            children: <CompletedTasks listado={completedTasks} />,
           },
           {
             key: "Tab3",
             label: "Canceladas",
-            children: <CompletedTasks listado={[]} />,
+            children: <CompletedTasks listado={completedTasks} />,
           },
           {
             key: "Tab4",
