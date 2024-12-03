@@ -2,6 +2,7 @@ import { Button, Col, Form, Input, Radio } from "antd";
 import TaskListDashboard from "./components/TaskListDashboard";
 import CustomTabs from "../../shared/components/CustomTabs";
 import ContainerTask from "./components/ContainerTask";
+import UsersList from "../users/UsersList";
 
 const DashboardPage = () => {
   return (
@@ -67,8 +68,7 @@ const DashboardPage = () => {
                       position: "fixed",
                       top: "20%",
                     }}
-                    layout="vertical"
-                  >
+                    layout="vertical">
                     <Form.Item
                       name={"title"}
                       label={"Title"}
@@ -84,8 +84,7 @@ const DashboardPage = () => {
                           message:
                             "Only letters, numbers, and spaces are allowed",
                         },
-                      ]}
-                    >
+                      ]}>
                       <Input />
                     </Form.Item>
                     <Form.Item
@@ -114,8 +113,7 @@ const DashboardPage = () => {
                           message:
                             "Description must have at least 10 characters",
                         },
-                      ]}
-                    >
+                      ]}>
                       <Input.TextArea
                         size="large"
                         style={{ height: "200px", maxHeight: "350px" }}
@@ -139,19 +137,25 @@ const DashboardPage = () => {
                           //     "Only letters, numbers, and spaces are allowed",
                           // },
                         ]
-                      }
-                    >
+                      }>
                       <Radio.Group>
-                        <Radio value={1} style={{color: "var(--primary-color)"}} >Ready</Radio>
-                        <Radio value={2}  style={{color: "orange"}}>Earring</Radio>
-                        <Radio value={3}  style={{color: "red"}}>Canceled</Radio>
+                        <Radio
+                          value={1}
+                          style={{ color: "var(--primary-color)" }}>
+                          Ready
+                        </Radio>
+                        <Radio value={2} style={{ color: "orange" }}>
+                          Earring
+                        </Radio>
+                        <Radio value={3} style={{ color: "red" }}>
+                          Canceled
+                        </Radio>
                       </Radio.Group>
                     </Form.Item>
                     <Button
                       type="primary"
                       htmlType="submit"
-                      style={{ width: "100%" }}
-                    >
+                      style={{ width: "100%" }}>
                       Send
                     </Button>
                   </Form>
@@ -184,6 +188,15 @@ const DashboardPage = () => {
                 <div style={{ flex: 1 }}>
                   <Form></Form>
                 </div>
+              </ContainerTask>
+            ),
+          },
+          {
+            key: "Tab4",
+            label: "Users",
+            children: (
+              <ContainerTask>
+                <UsersList />
               </ContainerTask>
             ),
           },
