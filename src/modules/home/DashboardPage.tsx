@@ -1,7 +1,8 @@
-import { Button, Col, Form, Input, Radio } from "antd";
-import TaskListDashboard from "./components/TaskListDashboard";
+import { Button, Form, Input, Radio, Table } from "antd";
 import CustomTabs from "../../shared/components/CustomTabs";
 import ContainerTask from "./components/ContainerTask";
+import TaskListDashboard from "./components/TaskListDashboard";
+import TableUsers from "./components/TableUsers";
 
 const DashboardPage = () => {
   return (
@@ -180,6 +181,20 @@ const DashboardPage = () => {
               <ContainerTask>
                 <div style={{ flex: 3 }}>
                   <TaskListDashboard data={[]} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <Form></Form>
+                </div>
+              </ContainerTask>
+            ),
+          },
+          {
+            key: "Tab4",
+            label: "Usuarios",
+            children: (
+              <ContainerTask>
+                <div style={{ flex: 3 }}>
+                 <TableUsers/>
                 </div>
                 <div style={{ flex: 1 }}>
                   <Form></Form>
