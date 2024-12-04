@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const AuthenticationLayout = () => {
   return (
@@ -13,14 +13,16 @@ const AuthenticationLayout = () => {
           flexDirection: "column",
           justifyContent: "space-between",
           gap: "20px",
-        }}>
+        }}
+      >
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             height: "90vh",
-          }}>
-          Prueba
+          }}
+        >
+          <Link to={"/"}>Landing</Link>
           <div style={{ height: "95%" }}>
             <Outlet />
           </div>
