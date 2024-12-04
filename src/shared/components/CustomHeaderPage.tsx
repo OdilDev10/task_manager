@@ -1,10 +1,21 @@
+import { useNavigate } from "react-router-dom";
+import { Flex, Button } from "antd";
+
 const CustomHeaderPage = () => {
+  const navigate = useNavigate();
   return (
-    <div style={{ height: "5%" }}>
+    <Flex align="center" style={{ height: "5%" }}>
       <div style={{ flex: 1 }}>
         <h2>Task Manager</h2>
       </div>
-    </div>
+      <div>
+        <Flex gap="small" wrap>
+          <Button onClick={() => navigate("/404")} type="primary">
+            Sign in
+          </Button>
+        </Flex>
+      </div>
+    </Flex>
   );
 };
 
