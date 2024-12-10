@@ -1,5 +1,5 @@
-import { MailOutlined, LockOutlined } from "@ant-design/icons";
-import { Flex, Input, Checkbox, Button } from "antd";
+import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+import { Flex, Input, Button } from "antd";
 import { Form } from "antd";
 import { AuthProps } from "../../../shared/interfaces/AuthProps";
 
@@ -10,12 +10,24 @@ const Register = ({ setAuthenticationStatus }: AuthProps) => {
   return (
     <>
       <Flex vertical justify="center" align="center" gap="middle">
-        <h1>Login to your account</h1>
+        <h1>Register for free</h1>
         <Form
-          name="login"
+          name="register"
           initialValues={{ remember: true }}
           style={{ width: 360 }}
           onFinish={onFinish}>
+          <Form.Item
+            name="name"
+            rules={[{ required: true, message: "Please input your name!" }]}>
+            <Input prefix={<UserOutlined />} placeholder="Name" />
+          </Form.Item>
+          <Form.Item
+            name="lastName"
+            rules={[
+              { required: true, message: "Please input your last name!" },
+            ]}>
+            <Input prefix={<UserOutlined />} placeholder="Last name" />
+          </Form.Item>
           <Form.Item
             name="email"
             rules={[{ required: true, message: "Please input your email!" }]}>
@@ -33,23 +45,14 @@ const Register = ({ setAuthenticationStatus }: AuthProps) => {
             />
           </Form.Item>
           <Form.Item>
-            <Flex justify="space-between" align="center">
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
-              <a href="">Forgot password</a>
-            </Flex>
-          </Form.Item>
-
-          <Form.Item>
             <Button block type="primary" htmlType="submit">
-              Log in
+              Register
             </Button>
             or{" "}
             <span
-              onClick={() => setAuthenticationStatus("register")}
+              onClick={() => setAuthenticationStatus("login")}
               style={{ cursor: "pointer", color: "#1677ff" }}>
-              Register now!
+              Login to your account!
             </span>
           </Form.Item>
         </Form>

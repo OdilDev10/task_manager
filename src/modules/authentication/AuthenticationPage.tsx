@@ -1,7 +1,7 @@
 import { Flex } from "antd";
 import { useState } from "react";
-import Login from "../home/components/Login";
-import Register from "../home/components/Register";
+import Login from "../home/components/Register";
+import Register from "../home/components/Login";
 
 const AuthenticationPage = () => {
   const [authenticationStatus, setAuthenticationStatus] = useState<
