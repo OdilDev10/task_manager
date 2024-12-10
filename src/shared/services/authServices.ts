@@ -4,6 +4,7 @@ import {
   RegisterInterface,
 } from "../interfaces/AuthInterfaces";
 import instanceAxios from "./axiosconfig";
+import Swal from "sweetalert2";
 
 export const postRegisterUser = async (data: RegisterInterface) => {
   try {
@@ -25,11 +26,15 @@ export const postLoginUser = async (data: LoginInterface) => {
       // Error específico de Axios
 
       if (Array.isArray(error?.response?.data?.errors)) {
-        console.log(error.response?.data?.errors, "Array");
+        console.log(error.response?.data?.errors[0], "Array");
+        Swal.fire(
+          `${error.response?.data.errors[0].message}`
+        );
       }
 
       if (error?.response?.data?.error) {
         console.log(error.response?.data.error, "string");
+        Swal.fire(`${error.response?.data.error}`);
       }
 
       return error.response?.data || "Error en el servidor";
