@@ -3,11 +3,17 @@ import { Flex, Input, Checkbox, Button } from "antd";
 import { Form } from "antd";
 import { AuthProps } from "../../../shared/interfaces/AuthProps";
 import { postLoginUser } from "../../../shared/services/authServices";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ setAuthenticationStatus }: AuthProps) => {
-  const onFinish = (values: any) => {
+  const navigate = useNavigate();
+
+  const onFinish = async (values: any) => {
     console.log("Received values of form: ", values);
-    postLoginUser(values);
+    const response = (await postLoginUser(values)) == true;
+    if (response) {
+      navigate("/dashboard");
+    }
   };
   return (
     <>

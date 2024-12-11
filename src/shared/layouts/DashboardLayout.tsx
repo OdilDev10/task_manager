@@ -1,8 +1,18 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import CustomHeaderPage from "../components/CustomHeaderPage";
 import CustomFooterPage from "../components/CustomFooterPage";
+import { useEffect, useState } from "react";
 
 const DashboardLayout = () => {
+  const navigate = useNavigate();
+
+  const [token] = useState<string | null>(localStorage.getItem("token"));
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/authentication", { replace: true });
+    }
+  }, [token]);
   return (
     <div
       style={{
@@ -14,21 +24,20 @@ const DashboardLayout = () => {
         flexDirection: "column",
         justifyContent: "space-between",
         gap: "20px",
-      }}
-    >
+      }}>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           height: "90vh",
-        }}
-      >
-        <CustomHeaderPage />Prueba
-        <div style={{ height: "95%",    }}>
+        }}>
+        <CustomHeaderPage />
+        Prueba
+        <div style={{ height: "95%" }}>
           <Outlet />
         </div>
       </div>
-      <CustomFooterPage/>
+      <CustomFooterPage />
     </div>
   );
 };

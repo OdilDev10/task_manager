@@ -18,7 +18,7 @@ const DashboardPage = () => {
   };
 
   const dtoTasks = (data: any[]) => {
-    let results = data.map((item) => {
+    let results = data?.map((item) => {
       return {
         id: item?.id || "",
         title: item?.title || "",

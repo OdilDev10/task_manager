@@ -2,10 +2,17 @@ import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import { Flex, Input, Button } from "antd";
 import { Form } from "antd";
 import { AuthProps } from "../../../shared/interfaces/AuthProps";
+import { postRegisterUser } from "../../../shared/services/authServices";
+import Swal from "sweetalert2";
 
 const Register = ({ setAuthenticationStatus }: AuthProps) => {
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     console.log("Received values of form: ", values);
+    const results = await postRegisterUser(values);
+    if (results?.user?.id) {
+      Swal.fire(results?.message);
+      setAuthenticationStatus("login");
+    }
   };
   return (
     <>

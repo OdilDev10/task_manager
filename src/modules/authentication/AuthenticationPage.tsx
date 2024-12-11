@@ -1,21 +1,31 @@
 import { Flex } from "antd";
-import { useState } from "react";
-import Login from "../home/components/Register";
-import Register from "../home/components/Login";
+import { useEffect, useState } from "react";
+import Register from "../home/components/Register";
+import Login from "../home/components/Login";
+import { useNavigate } from "react-router-dom";
 
 const AuthenticationPage = () => {
+  const navigate = useNavigate();
   const [authenticationStatus, setAuthenticationStatus] = useState<
     "register" | "login"
   >("login");
 
+  const [token] = useState<string | null>(localStorage.getItem("token"));
+
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [token]);
+
   return (
     <Flex align="center" justify="center" style={{ height: "100%" }}>
       {authenticationStatus === "login" && (
-        <Register setAuthenticationStatus={setAuthenticationStatus} />
+        <Login setAuthenticationStatus={setAuthenticationStatus} />
       )}
 
       {authenticationStatus === "register" && (
-        <Login setAuthenticationStatus={setAuthenticationStatus} />
+        <Register setAuthenticationStatus={setAuthenticationStatus} />
       )}
     </Flex>
   );
