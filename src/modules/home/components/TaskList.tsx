@@ -1,8 +1,18 @@
 import { Button, Form, Input, Radio } from "antd";
 import ContainerTask from "./ContainerTask";
 import TaskListDashboard from "./TaskListDashboard";
+import { postCreateTask } from "../../../shared/services/taskServices";
 
-const CompletedTasks = ({ listado }: { listado: any[] }) => {
+const TaskList = ({ listado }: { listado: any[] }) => {
+  const [form] = Form.useForm();
+
+  const onFinish = (values: any) => {
+    let user = localStorage.getItem("user");
+    if (!user) return;
+    values["userId"] = JSON.parse(user).id;
+    postCreateTask(values);
+    console.log(values, form.validateFields());
+  };
   return (
     <ContainerTask styles={{ overflowY: "auto", height: "75vh" }}>
       <div style={{ flex: 3 }}>
@@ -10,6 +20,8 @@ const CompletedTasks = ({ listado }: { listado: any[] }) => {
       </div>
       <div style={{ flex: 1, position: "relative", padding: "20px" }}>
         <Form
+          form={form}
+          onFinish={onFinish}
           style={{
             padding: "10px",
             display: "flex",
@@ -31,19 +43,20 @@ const CompletedTasks = ({ listado }: { listado: any[] }) => {
               },
               { required: true, message: "Title is required" },
               {
-                pattern: /^[a-zA-Z\s]+$/,
+                pattern: /^[a-zA-Z0-9\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/,
                 message: "Only letters and spaces are allowed",
               },
-            ]}>
+            ]}
+            style={{ width: "100%" }}>
             <Input />
           </Form.Item>
           <Form.Item
-            name={"description"}
+            name={"content"}
             label={"Description"}
             rules={[
               {
-                pattern: /^[a-zA-Z\s]+$/,
-                message: "Only letters and spaces are allowed",
+                pattern: /^[a-zA-Z0-9\s!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/,
+                message: "Only letters, numbers and spaces are allowed",
               },
               // {
               //   validator: (_, value) =>
@@ -61,7 +74,8 @@ const CompletedTasks = ({ listado }: { listado: any[] }) => {
                 min: 10,
                 message: "Description must have at least 10 characters",
               },
-            ]}>
+            ]}
+            style={{ width: "100%" }}>
             <Input.TextArea
               size="large"
               style={{ height: "200px", maxHeight: "350px" }}
@@ -71,30 +85,31 @@ const CompletedTasks = ({ listado }: { listado: any[] }) => {
           <Form.Item
             name={"status"}
             label={"Status"}
-            rules={
-              [
-                // {
-                //   min: 3,
-                //   max: 50,
-                //   message: "Title must be between 3 and 50 characters",
-                // },
-                // { required: true, message: "Title is required" },
-                // {
-                //   pattern: /^[a-zA-Z0-9\s]+$/,
-                //   message:
-                //     "Only letters, numbers, and spaces are allowed",
-                // },
-              ]
-            }>
+            rules={[
+              // {
+              //   min: 3,
+              //   max: 50,
+              //   message: "Title must be between 3 and 50 characters",
+              // },
+              // { required: true, message: "Title is required" },
+              // {
+              //   pattern: /^[a-zA-Z0-9\s]+$/,
+              //   message:
+              //     "Only letters, numbers, and spaces are allowed",
+              // },
+              { required: true, message: "Status is required" },
+            ]}>
             <Radio.Group>
-              <Radio value={1} style={{ color: "var(--primary-color)" }}>
-                Ready
+              <Radio
+                value="COMPLETED"
+                style={{ color: "var(--primary-color)" }}>
+                Completed
               </Radio>
-              <Radio value={2} style={{ color: "orange" }}>
-                Earring
+              <Radio value="PENDING" style={{ color: "orange" }}>
+                Pending
               </Radio>
-              <Radio value={3} style={{ color: "red" }}>
-                Canceled
+              <Radio value="CANCELLED" style={{ color: "red" }}>
+                Cancelled
               </Radio>
             </Radio.Group>
           </Form.Item>
@@ -107,4 +122,4 @@ const CompletedTasks = ({ listado }: { listado: any[] }) => {
   );
 };
 
-export default CompletedTasks;
+export default TaskList;

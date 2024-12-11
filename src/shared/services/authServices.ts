@@ -22,6 +22,7 @@ export const postLoginUser = async (data: LoginInterface) => {
     const results = await instanceAxios.post("login", data);
     Swal.fire(results.data?.message);
     localStorage.setItem("token", results.data?.token);
+    localStorage.setItem("user", JSON.stringify(results.data?.user));
     return true;
   } catch (error) {
     authError(error);

@@ -44,8 +44,8 @@ const TableUsers = () => {
 
   useEffect(() => {
     getAllUsers().then((data) => {
-      setAllUsers(dtoUsers(data));
-      console.log(data);
+      setAllUsers(dtoUsers(data?.data));
+      console.log(data, "users");
     });
   }, []);
 
