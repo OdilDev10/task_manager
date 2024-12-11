@@ -1,9 +1,10 @@
+import TaskStatusEnum from "../enums/TaskStatusEnum";
 import { TaskInterface } from "../interfaces/TaskInterface";
 import instanceAxios from "./axiosconfig";
 
-export const getAllTasks = async () => {
+export const getAllTasks = async (status: TaskStatusEnum) => {
   try {
-    const allTasks = await instanceAxios.get("tasks");
+    const allTasks = await instanceAxios.get(`tasks?status=${status}`);
     return allTasks.data;
   } catch (error) {
     console.log(error);
