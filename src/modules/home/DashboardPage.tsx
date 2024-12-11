@@ -56,7 +56,7 @@ const DashboardPage = () => {
           {
             key: "Tab2",
             label: "Pendientes",
-            children: <CompletedTasks listado={completedTasks} />,
+            children: <TaskList listado={allTasks} />,
           },
           {
             key: TaskStatusEnum.CANCELLED,
