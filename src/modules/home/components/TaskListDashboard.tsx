@@ -24,8 +24,8 @@ const TaskListDashboard = ({ data }: { data: TaskInterface[] }) => {
                   src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
                 />
               }
-              title={<a href="https://ant.design">{item.title}</a>}
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              title={item.title}
+              description={item.content}
             />
 
             <div style={{ display: "flex" }}>

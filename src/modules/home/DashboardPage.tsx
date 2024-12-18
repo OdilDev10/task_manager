@@ -10,7 +10,7 @@ import { UserInterface } from "../../shared/interfaces/UserInterface";
 
 const DashboardPage = () => {
   const [allTasks, setAllTasks] = useState<TaskInterface[]>([]);
-  const [allUsers, setAllUsers] = useState<UserInterface[]>([])
+  const [allUsers, setAllUsers] = useState<UserInterface[]>([]);
   const [selectedTab, setSelectedTab] = useState<TaskStatusEnum>(
     TaskStatusEnum.COMPLETED
   );
@@ -43,13 +43,13 @@ const DashboardPage = () => {
   const localGetAllUsers = () => {
     getAllUsers().then((data) => {
       console.log(data, "users");
-      setAllUsers(dtoUsers(data))
+      setAllUsers(dtoUsers(data));
     });
   };
   const localGetAllTask = (selectedTab: TaskStatusEnum) => {
     getAllTasks(selectedTab).then((data) => {
-      setAllTasks(dtoTasks(data.data));
-      console.log(data);
+      setAllTasks(dtoTasks(data));
+      console.log(data, "data");
     });
   };
 
@@ -60,10 +60,11 @@ const DashboardPage = () => {
       e == TaskStatusEnum.COMPLETED
     ) {
       setSelectedTab(e);
+      localGetAllTask(e);
       console.log(e);
-      return
+      return;
     }
-    localGetAllUsers()
+    localGetAllUsers();
   };
 
   useEffect(() => {
