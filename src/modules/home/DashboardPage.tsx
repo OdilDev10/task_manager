@@ -50,11 +50,11 @@ const DashboardPage = () => {
         tabs={[
           {
             key: TaskStatusEnum.COMPLETED,
-            label: "Pendientes",
+            label: "Completadas",
             children: <TaskList listado={allTasks} />,
           },
           {
-            key: "Tab2",
+            key: TaskStatusEnum.PENDING,
             label: "Pendientes",
             children: <TaskList listado={allTasks} />,
           },
