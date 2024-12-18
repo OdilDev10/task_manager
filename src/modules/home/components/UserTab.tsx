@@ -3,8 +3,9 @@ import { Form } from "antd";
 import ContainerTask from "./ContainerTask";
 import TableUsers from "./TableUsers";
 import { postCreateUser } from "../../../shared/services/userServices";
+import { UserInterface } from "../../../shared/interfaces/UserInterface";
 
-const UserTab = () => {
+const UserTab = ({ allUsers }: { allUsers: UserInterface[] }) => {
   const [form] = Form.useForm();
   const onFinish = async (values: any) => {
     console.log(values, form.validateFields());
@@ -13,7 +14,7 @@ const UserTab = () => {
   return (
     <ContainerTask>
       <div style={{ flex: 3 }}>
-        <TableUsers />
+        <TableUsers allUsers={allUsers} />
       </div>
       <div style={{ flex: 1 }}>
         <Form
@@ -28,7 +29,8 @@ const UserTab = () => {
           }}
           form={form}
           onFinish={onFinish}
-          layout="vertical">
+          layout="vertical"
+        >
           <Form.Item
             name={"name"}
             label={"Name"}
@@ -43,7 +45,8 @@ const UserTab = () => {
                 pattern: /^[a-zA-Z\s]+$/,
                 message: "Only letters and spaces are allowed",
               },
-            ]}>
+            ]}
+          >
             <Input />
           </Form.Item>
           <Form.Item
@@ -60,7 +63,8 @@ const UserTab = () => {
                 pattern: /^[a-zA-Z\s]+$/,
                 message: "Only letters and spaces are allowed",
               },
-            ]}>
+            ]}
+          >
             <Input />
           </Form.Item>
           <Form.Item
@@ -72,7 +76,8 @@ const UserTab = () => {
                 message: "The input is not valid E-mail!",
               },
               { required: true, message: "Email is required" },
-            ]}>
+            ]}
+          >
             <Input />
           </Form.Item>
 

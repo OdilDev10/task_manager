@@ -5,9 +5,12 @@ import { getAllTasks } from "../../shared/services/taskServices";
 import TaskStatusEnum from "../../shared/enums/TaskStatusEnum";
 import TaskList from "./components/TaskList";
 import UserTab from "./components/UserTab";
+import { getAllUsers } from "../../shared/services/userServices";
+import { UserInterface } from "../../shared/interfaces/UserInterface";
 
 const DashboardPage = () => {
   const [allTasks, setAllTasks] = useState<TaskInterface[]>([]);
+  const [allUsers, setAllUsers] = useState<UserInterface[]>([])
   const [selectedTab, setSelectedTab] = useState<TaskStatusEnum>(
     TaskStatusEnum.COMPLETED
   );
@@ -24,13 +27,31 @@ const DashboardPage = () => {
     });
     return results;
   };
+  const dtoUsers = (data: any[]) => {
+    let results = data.map((item) => {
+      return {
+        id: item?.id || "",
+        name: item?.name || "",
+        lastName: item?.lastName || "",
+        email: item?.email || "",
+      };
+    });
 
-  useEffect(() => {
+    return results;
+  };
+
+  const localGetAllUsers = () => {
+    getAllUsers().then((data) => {
+      console.log(data, "users");
+      setAllUsers(dtoUsers(data))
+    });
+  };
+  const localGetAllTask = (selectedTab: TaskStatusEnum) => {
     getAllTasks(selectedTab).then((data) => {
       setAllTasks(dtoTasks(data.data));
       console.log(data);
     });
-  }, [selectedTab]);
+  };
 
   const onChangeTab = (e: TaskStatusEnum) => {
     if (
@@ -40,8 +61,15 @@ const DashboardPage = () => {
     ) {
       setSelectedTab(e);
       console.log(e);
+      return
     }
+    localGetAllUsers()
   };
+
+  useEffect(() => {
+    localGetAllTask(selectedTab);
+  }, [selectedTab]);
+
   return (
     <div>
       <CustomTabs
@@ -66,7 +94,7 @@ const DashboardPage = () => {
           {
             key: "Tab4",
             label: "Usuarios",
-            children: <UserTab />,
+            children: <UserTab allUsers={allUsers} />,
           },
         ]}
       />

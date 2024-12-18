@@ -1,11 +1,7 @@
 import { Table } from "antd";
-import { useEffect, useState } from "react";
-import { getAllUsers } from "../../../shared/services/userServices";
 import { UserInterface } from "../../../shared/interfaces/UserInterface";
 
-const TableUsers = () => {
-  const [allUsers, setAllUsers] = useState<UserInterface[]>([]);
-
+const TableUsers = ({ allUsers }: { allUsers: UserInterface[] }) => {
   const columns = [
     {
       title: "ID",
@@ -28,26 +24,6 @@ const TableUsers = () => {
       key: "email",
     },
   ];
-
-  const dtoUsers = (data: any[]) => {
-    let results = data.map((item) => {
-      return {
-        id: item?.id || "",
-        name: item?.name || "",
-        lastName: item?.lastName || "",
-        email: item?.email || "",
-      };
-    });
-
-    return results;
-  };
-
-  useEffect(() => {
-    getAllUsers().then((data) => {
-      setAllUsers(dtoUsers(data?.data));
-      console.log(data, "users");
-    });
-  }, []);
 
   return (
     <div>
