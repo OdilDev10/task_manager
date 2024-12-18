@@ -12,6 +12,7 @@ const TaskList = ({ listado }: { listado: any[] }) => {
     values["userId"] = JSON.parse(user).id;
     postCreateTask(values);
     console.log(values, form.validateFields());
+    form.resetFields();
   };
   return (
     <ContainerTask styles={{ overflowY: "auto", height: "75vh" }}>
