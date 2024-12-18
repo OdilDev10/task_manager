@@ -1,4 +1,4 @@
-import { Button, Form, Input, Radio } from "antd";
+import { Button, Form, Input } from "antd";
 import ContainerTask from "./ContainerTask";
 import TaskListDashboard from "./TaskListDashboard";
 import { postCreateTask } from "../../../shared/services/taskServices";
@@ -29,8 +29,7 @@ const TaskList = ({ listado }: { listado: any[] }) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            position: "fixed",
-            top: "20%",
+            width: "100%",
           }}
           layout="vertical">
           <Form.Item
@@ -83,7 +82,7 @@ const TaskList = ({ listado }: { listado: any[] }) => {
             />
           </Form.Item>
 
-          <Form.Item
+          {/* <Form.Item
             name={"status"}
             label={"Status"}
             rules={[
@@ -113,7 +112,7 @@ const TaskList = ({ listado }: { listado: any[] }) => {
                 Cancelled
               </Radio>
             </Radio.Group>
-          </Form.Item>
+          </Form.Item> */}
           <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
             Send
           </Button>

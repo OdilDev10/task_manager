@@ -1,7 +1,7 @@
 enum TaskStatusEnum {
-  COMPLETED = "completed",
-  PENDING = "pending",
-  CANCELLED = "cancelled",
+  COMPLETED = "COMPLETED",
+  PENDING = "PENDING",
+  CANCELLED = "CANCELLED",
 }
 
 export default TaskStatusEnum;

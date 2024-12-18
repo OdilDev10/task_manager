@@ -1,53 +1,8 @@
 import { Avatar, Button, List } from "antd";
 import ButtonGroup from "antd/es/button/button-group";
 import { TaskInterface } from "../../../shared/interfaces/TaskInterface";
-import { useEffect, useState } from "react";
-import { getAllTasks } from "../../../shared/services/taskServices";
 
 const TaskListDashboard = ({ data }: { data: TaskInterface[] }) => {
-  const [allTasks, setAllTasks] = useState<TaskInterface[]>([]);
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-    },
-    {
-      title: "Content",
-      dataIndex: "content",
-      key: "content",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-    },
-  ];
-
-  const dtoTasks = (data: any[]) => {
-    let results = data?.map((item) => {
-      return {
-        id: item?.id || "",
-        title: item?.title || "",
-        content: item?.content || "",
-        status: item?.status || "",
-      };
-    });
-    return results;
-  };
-
-  // useEffect(() => {
-  //   getAllTasks().then((data) => {
-  //     setAllTasks(dtoTasks(data.data));
-  //     console.log(data);
-  //   });
-  // }
-  // , []);
   return (
     <>
       <List
@@ -67,8 +22,8 @@ const TaskListDashboard = ({ data }: { data: TaskInterface[] }) => {
                   src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
                 />
               }
-              title={<a href="https://ant.design">{item.title}</a>}
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              title={item.title}
+              description={item.content}
             />
 
             <div style={{ display: "flex" }}>
