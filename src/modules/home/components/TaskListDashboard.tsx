@@ -1,5 +1,6 @@
 import { Avatar, Button, List } from "antd";
 import ButtonGroup from "antd/es/button/button-group";
+import ModalCreateTask from "./ModalCreateTask";
 import { TaskInterface } from "../../../shared/interfaces/TaskInterface";
 import { useEffect, useState } from "react";
 import { getAllTasks } from "../../../shared/services/taskServices";
@@ -54,9 +55,10 @@ const TaskListDashboard = ({ data }: { data: TaskInterface[] }) => {
         pagination={{ position: "bottom", align: "center", pageSize: 6 }}
         dataSource={data}
         header={
-          <>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h3>Listado</h3>
-          </>
+            <ModalCreateTask />
+          </div>
         }
         itemLayout="horizontal"
         renderItem={(item, index) => (

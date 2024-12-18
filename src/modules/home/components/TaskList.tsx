@@ -19,7 +19,7 @@ const TaskList = ({ listado }: { listado: any[] }) => {
       <div style={{ flex: 3 }}>
         <TaskListDashboard data={listado} />
       </div>
-      <div style={{ flex: 1, position: "relative", padding: "20px" }}>
+      {/* <div style={{ flex: 1, position: "relative", padding: "20px" }}>
         <Form
           form={form}
           onFinish={onFinish}
@@ -118,7 +118,7 @@ const TaskList = ({ listado }: { listado: any[] }) => {
             Send
           </Button>
         </Form>
-      </div>
+      </div> */}
     </ContainerTask>
   );
 };
