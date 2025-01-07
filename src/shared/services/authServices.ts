@@ -1,12 +1,9 @@
 import axios from "axios";
-import {
-  LoginInterface,
-  RegisterInterface,
-} from "../interfaces/AuthInterfaces";
-import instanceAxios from "./axiosconfig";
 import Swal from "sweetalert2";
+import { IUserLogin, IUserRegister } from "../schemas/authSchemas";
+import instanceAxios from "./axiosconfig";
 
-export const postRegisterUser = async (data: RegisterInterface) => {
+export const postRegisterUser = async (data: Partial<IUserRegister>) => {
   try {
     console.log("Datos enviados al backend:", data); // Debug
     const results = await instanceAxios.post("register", data);
@@ -17,7 +14,7 @@ export const postRegisterUser = async (data: RegisterInterface) => {
   }
 };
 
-export const postLoginUser = async (data: LoginInterface) => {
+export const postLoginUser = async (data: Partial<IUserLogin>) => {
   try {
     const results = await instanceAxios.post("login", data);
     Swal.fire(results.data?.message);
@@ -29,7 +26,7 @@ export const postLoginUser = async (data: LoginInterface) => {
   }
 };
 
-export const authError = (error: any) => {
+export const authError = (error: unknown) => {
   if (axios.isAxiosError(error)) {
     if (Array.isArray(error?.response?.data?.errors)) {
       console.log(error.response?.data?.errors[0], "Array");

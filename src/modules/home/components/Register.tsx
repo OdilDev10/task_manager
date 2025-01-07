@@ -1,12 +1,19 @@
-import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  MailOutlined,
+  LockOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+} from "@ant-design/icons";
 import { Flex, Input, Button } from "antd";
 import { Form } from "antd";
 import { AuthProps } from "../../../shared/interfaces/AuthProps";
 import { postRegisterUser } from "../../../shared/services/authServices";
 import Swal from "sweetalert2";
+import { IUserRegister } from "../../../shared/schemas/authSchemas";
 
 const Register = ({ setAuthenticationStatus }: AuthProps) => {
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: Partial<IUserRegister>) => {
     console.log("Received values of form: ", values);
     const results = await postRegisterUser(values);
     if (results?.user?.id) {
@@ -48,11 +55,12 @@ const Register = ({ setAuthenticationStatus }: AuthProps) => {
             name="password"
             rules={[{ required: true, message: "Please input your Password!" }]}
           >
-            <Input
+            <Input.Password
+              placeholder="input password"
               prefix={<LockOutlined />}
-              type="password"
-              placeholder="Password"
-              suffix={<>A</>}
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
             />
           </Form.Item>
           <Form.Item>

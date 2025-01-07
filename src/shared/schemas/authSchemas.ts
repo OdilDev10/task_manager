@@ -27,5 +27,5 @@ export const UserLoginSchema = z.object({
 });
 
 // Exporta los tipos para usarlos en el resto de la app si es necesario
-export type UserLoginInput = z.infer<typeof UserLoginSchema>;
-export type UserRegisterInput = z.infer<typeof UserRegisterSchema>;
+export type IUserLogin = z.infer<typeof UserLoginSchema>;
+export type IUserRegister = z.infer<typeof UserRegisterSchema>;
