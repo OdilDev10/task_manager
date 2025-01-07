@@ -56,7 +56,7 @@ const Register = ({ setAuthenticationStatus }: AuthProps) => {
             rules={[{ required: true, message: "Please input your Password!" }]}
           >
             <Input.Password
-              placeholder="input password"
+              placeholder="Password"
               prefix={<LockOutlined />}
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />

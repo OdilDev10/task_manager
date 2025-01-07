@@ -10,6 +10,7 @@ import { AuthProps } from "../../../shared/interfaces/AuthProps";
 import { postLoginUser } from "../../../shared/services/authServices";
 import { useNavigate } from "react-router-dom";
 import { IUserLogin } from "../../../shared/schemas/authSchemas";
+import Swal from "sweetalert2";
 
 const Login = ({ setAuthenticationStatus }: AuthProps) => {
   const navigate = useNavigate();
@@ -17,7 +18,13 @@ const Login = ({ setAuthenticationStatus }: AuthProps) => {
   const onFinish = async (values: Partial<IUserLogin>) => {
     console.log("Received values of form: ", values);
     const response = (await postLoginUser(values)) == true;
+
     if (response) {
+      Swal.fire({
+        timer: 4000,
+        title: "Login Success",
+        text: "Login Exitoso",
+      });
       navigate("/dashboard");
     }
   };
@@ -42,7 +49,7 @@ const Login = ({ setAuthenticationStatus }: AuthProps) => {
             rules={[{ required: true, message: "Please input your Password!" }]}
           >
             <Input.Password
-              placeholder="input password"
+              placeholder="Password"
               prefix={<LockOutlined />}
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />

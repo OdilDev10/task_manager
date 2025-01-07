@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const DashboardLayout = () => {
   const navigate = useNavigate();
-
+  const globalUser = JSON.parse(localStorage.getItem("user") || "{}");
   const [token] = useState<string | null>(localStorage.getItem("token"));
 
   useEffect(() => {
@@ -24,15 +24,21 @@ const DashboardLayout = () => {
         flexDirection: "column",
         justifyContent: "space-between",
         gap: "20px",
-      }}>
+      }}
+    >
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           height: "90vh",
-        }}>
+        }}
+      >
         <CustomHeaderPage />
-        Prueba
+        <div>
+          <p style={{ fontWeight: "600", fontSize: "16px" }}>
+            User: {globalUser?.name} {globalUser?.lastName} ID: {globalUser?.id}
+          </p>
+        </div>
         <div style={{ height: "95%" }}>
           <Outlet />
         </div>
