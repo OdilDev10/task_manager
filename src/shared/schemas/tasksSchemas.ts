@@ -53,5 +53,5 @@ export const TaskSchemaUpdate = z.object({
 });
 
 // Exporta los tipos para usarlos en el resto de la app si es necesario
-export type TaskCreateInput = z.infer<typeof TaskSchemaCreate>;
-export type TaskUpdateInput = z.infer<typeof TaskSchemaUpdate>;
+export type ITask = z.infer<typeof TaskSchemaCreate>;
+export type ITaskUpdate = z.infer<typeof TaskSchemaUpdate>;

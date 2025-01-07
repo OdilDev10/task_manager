@@ -1,17 +1,17 @@
 import { Avatar, Button, List } from "antd";
 import ButtonGroup from "antd/es/button/button-group";
-import { TaskInterface } from "../../../shared/interfaces/TaskInterface";
-import ModalCreateTask from "./ModalCreateTask";
-import ModalDetailTask from "./ModalDetailTask";
+import { PaginationConfig } from "antd/es/pagination";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { PaginationConfig } from "antd/es/pagination";
+import { ITask } from "../../../shared/schemas/tasksSchemas";
+import ModalCreateTask from "./ModalCreateTask";
+import ModalDetailTask from "./ModalDetailTask";
 
 const TaskListDashboard = ({
   data,
   pagination,
 }: {
-  data: TaskInterface[];
+  data: ITask[];
   pagination: PaginationConfig | undefined;
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -21,7 +21,7 @@ const TaskListDashboard = ({
         pagination={{
           ...pagination,
           showSizeChanger: false,
-          pageSize: 10,
+          pageSize: 5,
           total: pagination?.total,
           onChange: (page) => {
             console.log("Cambiando a la página:", page);
