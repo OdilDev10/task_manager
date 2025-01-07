@@ -2,12 +2,31 @@ import { Avatar, Button, List } from "antd";
 import ButtonGroup from "antd/es/button/button-group";
 import { TaskInterface } from "../../../shared/interfaces/TaskInterface";
 import ModalCreateTask from "./ModalCreateTask";
+import ModalDetailTask from "./ModalDetailTask";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import { PaginationConfig } from "antd/es/pagination";
 
-const TaskListDashboard = ({ data }: { data: TaskInterface[] }) => {
+const TaskListDashboard = ({
+  data,
+  pagination,
+}: {
+  data: TaskInterface[];
+  pagination: PaginationConfig | undefined;
+}) => {
+  const [openModal, setOpenModal] = useState<boolean>(false);
   return (
     <>
       <List
-        pagination={{ position: "bottom", align: "center", pageSize: 6 }}
+        pagination={{
+          ...pagination,
+          showSizeChanger: false,
+          pageSize: 10,
+          total: pagination?.total,
+          onChange: (page) => {
+            console.log("Cambiando a la página:", page);
+          },
+        }}
         dataSource={data}
         header={
           <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -38,8 +57,38 @@ const TaskListDashboard = ({ data }: { data: TaskInterface[] }) => {
                 >
                   Check
                 </Button> */}
+                <ModalDetailTask open={openModal} setOpenModal={setOpenModal} />
+                <Button
+                  style={{ color: "green", borderColor: "green" }}
+                  onClick={() => {
+                    setOpenModal(!openModal);
+                  }}
+                >
+                  Detalle
+                </Button>
 
-                <Button style={{ color: "red", borderColor: "red" }}>
+                <Button
+                  style={{ color: "red", borderColor: "red" }}
+                  onClick={() => {
+                    Swal.fire({
+                      title: "Are you sure?",
+                      text: "You won't be able to revert this!",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Yes, delete it!",
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        Swal.fire({
+                          title: "Deleted!",
+                          text: "Your file has been deleted.",
+                          icon: "success",
+                        });
+                      }
+                    });
+                  }}
+                >
                   Delete
                 </Button>
               </ButtonGroup>

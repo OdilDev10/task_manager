@@ -7,10 +7,12 @@ import TaskList from "./components/TaskList";
 import UserTab from "./components/UserTab";
 import { getAllUsers } from "../../shared/services/userServices";
 import { UserInterface } from "../../shared/interfaces/UserInterface";
+import { PaginationConfig } from "antd/es/pagination";
 
 const DashboardPage = () => {
   const [allTasks, setAllTasks] = useState<TaskInterface[]>([]);
   const [allUsers, setAllUsers] = useState<UserInterface[]>([]);
+  const [pagination, setPagination] = useState<Partial<PaginationConfig>>({});
   const [selectedTab, setSelectedTab] = useState<TaskStatusEnum>(
     TaskStatusEnum.COMPLETED
   );
@@ -41,15 +43,26 @@ const DashboardPage = () => {
   };
 
   const localGetAllUsers = () => {
-    getAllUsers().then((data) => {
-      console.log(data, "users");
-      setAllUsers(dtoUsers(data));
+    getAllUsers().then((response) => {
+      console.log(response.data, "users");
+      setPagination({
+        current: response.pagination.currentPage,
+        pageSize: 5, 
+        total: response.pagination.totalRecords,
+      });
+      setAllUsers(dtoUsers(response.data));
     });
   };
   const localGetAllTask = (selectedTab: TaskStatusEnum) => {
-    getAllTasks(selectedTab).then((data) => {
-      setAllTasks(dtoTasks(data));
-      console.log(data, "data");
+    getAllTasks(selectedTab).then((response) => {
+      setAllTasks(dtoTasks(response?.data));
+      setPagination({
+        current: response.pagination.currentPage,
+        pageSize: 5, 
+        total: response.pagination.totalRecords,
+      });
+
+      console.log(response?.data, "data");
     });
   };
 
@@ -80,17 +93,17 @@ const DashboardPage = () => {
           {
             key: TaskStatusEnum.COMPLETED,
             label: "Completadas",
-            children: <TaskList listado={allTasks} />,
+            children: <TaskList listado={allTasks} pagination={pagination} />,
           },
           {
             key: TaskStatusEnum.PENDING,
             label: "Pendientes",
-            children: <TaskList listado={allTasks} />,
+            children: <TaskList listado={allTasks} pagination={pagination} />,
           },
           {
             key: TaskStatusEnum.CANCELLED,
             label: "Canceladas",
-            children: <TaskList listado={allTasks} />,
+            children: <TaskList listado={allTasks} pagination={pagination} />,
           },
           {
             key: "Tab4",

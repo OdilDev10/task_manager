@@ -22,33 +22,37 @@ const Register = ({ setAuthenticationStatus }: AuthProps) => {
           name="register"
           initialValues={{ remember: true }}
           style={{ width: 360 }}
-          onFinish={onFinish}>
+          onFinish={onFinish}
+        >
           <Form.Item
             name="name"
-            rules={[{ required: true, message: "Please input your name!" }]}>
+            rules={[{ required: true, message: "Please input your name!" }]}
+          >
             <Input prefix={<UserOutlined />} placeholder="Name" />
           </Form.Item>
           <Form.Item
             name="lastName"
             rules={[
               { required: true, message: "Please input your last name!" },
-            ]}>
+            ]}
+          >
             <Input prefix={<UserOutlined />} placeholder="Last name" />
           </Form.Item>
           <Form.Item
             name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}>
+            rules={[{ required: true, message: "Please input your email!" }]}
+          >
             <Input prefix={<MailOutlined />} type="email" placeholder="Email" />
           </Form.Item>
           <Form.Item
             name="password"
-            rules={[
-              { required: true, message: "Please input your Password!" },
-            ]}>
+            rules={[{ required: true, message: "Please input your Password!" }]}
+          >
             <Input
               prefix={<LockOutlined />}
               type="password"
               placeholder="Password"
+              suffix={<>A</>}
             />
           </Form.Item>
           <Form.Item>
@@ -58,7 +62,8 @@ const Register = ({ setAuthenticationStatus }: AuthProps) => {
             or{" "}
             <span
               onClick={() => setAuthenticationStatus("login")}
-              style={{ cursor: "pointer", color: "#1677ff" }}>
+              style={{ cursor: "pointer", color: "#1677ff" }}
+            >
               Login to your account!
             </span>
           </Form.Item>

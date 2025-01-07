@@ -1,4 +1,4 @@
-import { TabPaneProps, Tabs, TabsProps } from "antd";
+import { Tabs, TabsProps } from "antd";
 import { CSSProperties } from "react";
 import TaskStatusEnum from "../enums/TaskStatusEnum";
 
