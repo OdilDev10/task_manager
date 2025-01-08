@@ -23,7 +23,7 @@ export const postCreateTask = async (data: TaskInterface) => {
   }
 };
 
-export const deleteTask = async (id: string) => {
+export const deleteTask = async (id: number) => {
   try {
     const task = await instanceAxios.delete(`tasks/${id}`);
     console.log(task.data, "task");
@@ -34,11 +34,11 @@ export const deleteTask = async (id: string) => {
   }
 };
 
-export const disableTask = async (id: string) => {
+export const disableTask = async (id: number) => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   console.log(user.id, "user.id");
   try {
-    const task = await instanceAxios.delete(`tasks/${id}/${user.id}/disable `);
+    const task = await instanceAxios.put(`tasks/${id}/${user.id}/disable `);
     console.log(task.data, "task");
     return task.data;
   } catch (error) {

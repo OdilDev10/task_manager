@@ -1,8 +1,7 @@
-import { PaginationConfig } from "antd/es/pagination";
+import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
+import { ITask } from "../../../shared/schemas/tasksSchemas";
 import ContainerTask from "./ContainerTask";
 import TaskListDashboard from "./TaskListDashboard";
-import { ITask } from "../../../shared/schemas/tasksSchemas";
-import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 
 const TaskList = ({
   listado,
@@ -11,7 +10,12 @@ const TaskList = ({
   status,
 }: {
   listado: ITask[];
-  pagination: PaginationConfig | undefined;
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    limit: number;
+    totalRecords: number;
+  };
   localGetAllTask: (selectedTab: TaskStatusEnum) => void;
   status: TaskStatusEnum;
 }) => {

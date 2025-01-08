@@ -1,6 +1,5 @@
 import { Avatar, Button, List } from "antd";
 import ButtonGroup from "antd/es/button/button-group";
-import { PaginationConfig } from "antd/es/pagination";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { ITask } from "../../../shared/schemas/tasksSchemas";
@@ -16,7 +15,12 @@ const TaskListDashboard = ({
   status,
 }: {
   data: ITask[];
-  pagination: PaginationConfig | undefined;
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    limit: number;
+    totalRecords: number;
+  };
   localGetAllTask: (selectedTab: TaskStatusEnum) => void;
   status: TaskStatusEnum;
 }) => {
@@ -25,13 +29,14 @@ const TaskListDashboard = ({
     <>
       <List
         pagination={{
-          ...pagination,
           showSizeChanger: false,
-          pageSize: 5,
-          total: pagination?.total,
+          pageSize: pagination?.limit,
+          total: pagination?.totalRecords,
+          current: pagination?.currentPage,
           onChange: (page) => {
             console.log("Cambiando a la página:", page);
           },
+          ...pagination,
         }}
         dataSource={data}
         header={
@@ -71,7 +76,8 @@ const TaskListDashboard = ({
                   style={{ color: "green", borderColor: "green" }}
                   onClick={() => {
                     setOpenModal(!openModal);
-                  }}>
+                  }}
+                >
                   Detalle
                 </Button>
 
@@ -88,7 +94,7 @@ const TaskListDashboard = ({
                       confirmButtonText: "Yes, delete it!",
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        disableTask(item.id)
+                        disableTask(item?.id || 0)
                           .then((res) => {
                             console.log(res);
                             Swal.fire({
@@ -103,7 +109,8 @@ const TaskListDashboard = ({
                           });
                       }
                     });
-                  }}>
+                  }}
+                >
                   Delete
                 </Button>
               </ButtonGroup>

@@ -2,6 +2,7 @@ import { z } from "zod";
 
 // Validación para creación de usuario
 export const UserRegisterSchema = z.object({
+  id: z.number().optional(),
   name: z
     .string()
     .min(2, "Name is required")

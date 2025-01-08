@@ -1,6 +1,7 @@
 import { Button, Form, Input, Radio } from "antd";
 import { postCreateTask } from "../../../shared/services/taskServices";
 import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
+import { TaskInterface } from "../../../shared/interfaces/TaskInterface";
 
 const FormTask = ({
   localGetAllTask,
@@ -11,11 +12,17 @@ const FormTask = ({
 }) => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    let user = localStorage.getItem("user");
+  const onFinish = (values: TaskInterface) => {
+    let user = JSON.parse(localStorage.getItem("user") || "{}");
+
     if (!user) return;
     values["userId"] = JSON.parse(user).id;
-    postCreateTask(values);
+
+    postCreateTask(values).then((response) => {
+      console.log(response, "response");
+    }).catch((error) => {
+      console.log(error, "error");
+    })
     console.log(values, form.validateFields());
     form.resetFields();
     localGetAllTask(status);

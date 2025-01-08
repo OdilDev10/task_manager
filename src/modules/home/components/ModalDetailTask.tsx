@@ -1,6 +1,7 @@
 import { Button, Modal } from "antd";
 import React, { useState } from "react";
 import FormTask from "./FormTask";
+import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 
 const ModalDetailTask = ({
   open,
@@ -35,7 +36,12 @@ const ModalDetailTask = ({
           </>
         ) : (
           <>
-            <FormTask />
+            <FormTask
+              localGetAllTask={function (selectedTab: TaskStatusEnum): void {
+                console.log(selectedTab);
+              }}
+              status={TaskStatusEnum.COMPLETED}
+            />
             <Button
               onClick={() => {
                 setStatusForm("detail");

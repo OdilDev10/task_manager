@@ -1,15 +1,14 @@
-import { Input, Button } from "antd";
-import { Form } from "antd";
+import { Button, Form, Input } from "antd";
+import { IUserRegister } from "../../../shared/schemas/authSchemas";
+import { postCreateUser } from "../../../shared/services/userServices";
 import ContainerTask from "./ContainerTask";
 import TableUsers from "./TableUsers";
-import { postCreateUser } from "../../../shared/services/userServices";
-import { UserInterface } from "../../../shared/interfaces/UserInterface";
 
-const UserTab = ({ allUsers }: { allUsers: UserInterface[] }) => {
+const UserTab = ({ allUsers }: { allUsers: IUserRegister[] }) => {
   const [form] = Form.useForm();
-  const onFinish = async (values: any) => {
-    console.log(values, form.validateFields());
-    await postCreateUser(values);
+  const onFinish = async () => {
+    console.log( form.validateFields());
+    await postCreateUser(form.getFieldsValue());
   };
   return (
     <ContainerTask>

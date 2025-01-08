@@ -1,7 +1,7 @@
 import { Table } from "antd";
-import { UserInterface } from "../../../shared/interfaces/UserInterface";
+import { IUserRegister } from "../../../shared/schemas/authSchemas";
 
-const TableUsers = ({ allUsers }: { allUsers: UserInterface[] }) => {
+const TableUsers = ({ allUsers }: { allUsers: IUserRegister[] }) => {
   const columns = [
     {
       title: "ID",

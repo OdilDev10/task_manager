@@ -1,54 +1,49 @@
 import { useEffect, useState } from "react";
 import CustomTabs from "../../shared/components/CustomTabs";
-import { TaskInterface } from "../../shared/interfaces/TaskInterface";
-import { getAllTasks } from "../../shared/services/taskServices";
 import TaskStatusEnum from "../../shared/enums/TaskStatusEnum";
+import {
+  IUserRegister,
+  UserRegisterSchema,
+} from "../../shared/schemas/authSchemas";
+import { ITask, TaskSchemaCreate } from "../../shared/schemas/tasksSchemas";
+import { getAllTasks } from "../../shared/services/taskServices";
+import { getAllUsers } from "../../shared/services/userServices";
 import TaskList from "./components/TaskList";
 import UserTab from "./components/UserTab";
-import { getAllUsers } from "../../shared/services/userServices";
-import { UserInterface } from "../../shared/interfaces/UserInterface";
-import { PaginationConfig } from "antd/es/pagination";
 
 const DashboardPage = () => {
-  const [allTasks, setAllTasks] = useState<TaskInterface[]>([]);
-  const [allUsers, setAllUsers] = useState<UserInterface[]>([]);
-  const [pagination, setPagination] = useState<Partial<PaginationConfig>>({});
+  const [allTasks, setAllTasks] = useState<ITask[]>([]);
+  const [allUsers, setAllUsers] = useState<IUserRegister[]>([]);
+  const [pagination, setPagination] = useState({
+    currentPage: 1,
+    totalPages: 1,
+    limit: 10,
+    totalRecords: 1,
+  });
   const [selectedTab, setSelectedTab] = useState<TaskStatusEnum>(
     TaskStatusEnum.COMPLETED
   );
 
-  const dtoTasks = (data: any[]) => {
-    let results = data?.map((item) => {
-      return {
-        id: item?.id || "",
-        title: item?.title || "",
-        content: item?.content || "",
-        userId: item?.userId || "",
-        status: item?.status || "",
-      };
+  const dtoTasks = (data: unknown[]): ITask[] => {
+    return data.map((item) => {
+      return TaskSchemaCreate.parse(item); // Valida y transforma
     });
-    return results;
-  };
-  const dtoUsers = (data: any[]) => {
-    let results = data.map((item) => {
-      return {
-        id: item?.id || "",
-        name: item?.name || "",
-        lastName: item?.lastName || "",
-        email: item?.email || "",
-      };
-    });
-
-    return results;
   };
 
+  // Función para transformar y validar usuarios
+  const dtoUsers = (data: unknown[]): IUserRegister[] => {
+    return data.map((item) => {
+      return UserRegisterSchema.parse(item); // Valida y transforma
+    });
+  };
   const localGetAllUsers = () => {
     getAllUsers().then((response) => {
       console.log(response.data, "users");
       setPagination({
-        current: response.pagination.currentPage,
-        pageSize: 5,
-        total: response.pagination.totalRecords,
+        currentPage: response.pagination.currentPage,
+        limit: response?.pagination?.limit,
+        totalRecords: response.pagination.totalRecords,
+        totalPages: response.pagination.totalPages,
       });
       setAllUsers(dtoUsers(response.data));
     });
@@ -57,9 +52,10 @@ const DashboardPage = () => {
     getAllTasks(selectedTab).then((response) => {
       setAllTasks(dtoTasks(response?.data));
       setPagination({
-        current: response.pagination.currentPage,
-        pageSize: 5,
-        total: response.pagination.totalRecords,
+        currentPage: response.pagination.currentPage,
+        limit: response?.pagination?.limit,
+        totalRecords: response.pagination.totalRecords,
+        totalPages: response.pagination.totalPages,
       });
 
       console.log(response?.data, "data");
@@ -98,7 +94,9 @@ const DashboardPage = () => {
               <TaskList
                 listado={allTasks}
                 pagination={pagination}
-                localGetAllTask={localGetAllTask}
+                localGetAllTask={function (selectedTab: TaskStatusEnum): void {
+                  localGetAllTask(selectedTab);
+                }}
                 status={TaskStatusEnum.COMPLETED}
               />
             ),
@@ -110,8 +108,10 @@ const DashboardPage = () => {
               <TaskList
                 listado={allTasks}
                 pagination={pagination}
-                localGetAllTask={localGetAllTask}
-                status={TaskStatusEnum.PENDING}
+                localGetAllTask={function (selectedTab: TaskStatusEnum): void {
+                  localGetAllTask(selectedTab);
+                }}
+                status={TaskStatusEnum.COMPLETED}
               />
             ),
           },
@@ -122,8 +122,10 @@ const DashboardPage = () => {
               <TaskList
                 listado={allTasks}
                 pagination={pagination}
-                localGetAllTask={localGetAllTask}
-                status={TaskStatusEnum.CANCELLED}
+                localGetAllTask={function (selectedTab: TaskStatusEnum): void {
+                  localGetAllTask(selectedTab);
+                }}
+                status={TaskStatusEnum.COMPLETED}
               />
             ),
           },
