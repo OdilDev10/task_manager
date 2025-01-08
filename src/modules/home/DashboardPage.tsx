@@ -67,6 +67,7 @@ const DashboardPage = () => {
   };
 
   const onChangeTab = (e: TaskStatusEnum) => {
+    console.log(e);
     if (
       e == TaskStatusEnum.CANCELLED ||
       e == TaskStatusEnum.PENDING ||

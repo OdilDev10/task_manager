@@ -1,7 +1,14 @@
 import { Button, Form, Input, Radio } from "antd";
 import { postCreateTask } from "../../../shared/services/taskServices";
+import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 
-const FormTask = () => {
+const FormTask = ({
+  localGetAllTask,
+  status,
+}: {
+  localGetAllTask: (selectedTab: TaskStatusEnum) => void;
+  status: TaskStatusEnum;
+}) => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
@@ -11,6 +18,7 @@ const FormTask = () => {
     postCreateTask(values);
     console.log(values, form.validateFields());
     form.resetFields();
+    localGetAllTask(status);
   };
 
   return (
@@ -25,8 +33,7 @@ const FormTask = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        layout="vertical"
-      >
+        layout="vertical">
         <Form.Item
           name={"title"}
           label={"Title"}
@@ -42,8 +49,7 @@ const FormTask = () => {
               message: "Only letters and spaces are allowed",
             },
           ]}
-          style={{ width: "100%" }}
-        >
+          style={{ width: "100%" }}>
           <Input />
         </Form.Item>
         <Form.Item
@@ -71,8 +77,7 @@ const FormTask = () => {
               message: "Description must have at least 10 characters",
             },
           ]}
-          style={{ width: "100%" }}
-        >
+          style={{ width: "100%" }}>
           <Input.TextArea
             size="large"
             style={{ height: "200px", maxHeight: "350px" }}
@@ -95,8 +100,7 @@ const FormTask = () => {
             //     "Only letters, numbers, and spaces are allowed",
             // },
             { required: true, message: "Status is required" },
-          ]}
-        >
+          ]}>
           <Radio.Group>
             <Radio value="COMPLETED" style={{ color: "var(--primary-color)" }}>
               Completed

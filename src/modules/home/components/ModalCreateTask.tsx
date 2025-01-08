@@ -1,8 +1,15 @@
 import { Button, Modal } from "antd";
 import { useState } from "react";
 import FormTask from "./FormTask";
+import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 
-const ModalCreateTask = () => {
+const ModalCreateTask = ({
+  localGetAllTask,
+  status,
+}: {
+  localGetAllTask: (selectedTab: TaskStatusEnum) => void;
+  status: TaskStatusEnum;
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
@@ -26,9 +33,8 @@ const ModalCreateTask = () => {
         title="Agregar Tarea"
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <FormTask />
+        onCancel={handleCancel}>
+        <FormTask localGetAllTask={localGetAllTask} status={status} />
       </Modal>
     </div>
   );

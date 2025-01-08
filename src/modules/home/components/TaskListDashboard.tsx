@@ -37,7 +37,10 @@ const TaskListDashboard = ({
         header={
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h3>Listado</h3>
-            <ModalCreateTask />
+            <ModalCreateTask
+              status={status}
+              localGetAllTask={localGetAllTask}
+            />
           </div>
         }
         itemLayout="horizontal"
