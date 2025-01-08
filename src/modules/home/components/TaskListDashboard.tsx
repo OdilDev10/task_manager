@@ -42,9 +42,11 @@ const TaskListDashboard = ({
   setPagination: React.Dispatch<React.SetStateAction<PaginationCustom>>;
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+
   const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
     console.log(info?.source, value);
     localGetAllTask(status, { ...pagination, param: value });
+    console.log(_e, "e");
   };
   return (
     <>
@@ -78,6 +80,7 @@ const TaskListDashboard = ({
               enterButton="Search"
               size="middle"
               onSearch={onSearch}
+              onClear={() => {}}
             />
             <ModalCreateTask
               status={status}

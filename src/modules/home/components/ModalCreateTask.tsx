@@ -40,7 +40,11 @@ const ModalCreateTask = ({
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}>
-        <FormTask localGetAllTask={localGetAllTask} status={status} />
+        <FormTask
+          localGetAllTask={localGetAllTask}
+          status={status}
+          setIsModalOpen={setIsModalOpen}
+        />
       </Modal>
     </div>
   );
