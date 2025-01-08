@@ -8,6 +8,22 @@ import ModalDetailTask from "./ModalDetailTask";
 import { disableTask } from "../../../shared/services/taskServices";
 import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 import { PaginationCustom } from "../DashboardPage";
+import { AudioOutlined } from "@ant-design/icons";
+import { Input } from "antd";
+import type { GetProps } from "antd";
+
+type SearchProps = GetProps<typeof Input.Search>;
+
+const { Search } = Input;
+
+const suffix = (
+  <AudioOutlined
+    style={{
+      fontSize: 16,
+      color: "#1677ff",
+    }}
+  />
+);
 
 const TaskListDashboard = ({
   data,
@@ -26,6 +42,10 @@ const TaskListDashboard = ({
   setPagination: React.Dispatch<React.SetStateAction<PaginationCustom>>;
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
+    console.log(info?.source, value);
+    localGetAllTask(status, { ...pagination, param: value });
+  };
   return (
     <>
       <List
@@ -52,6 +72,13 @@ const TaskListDashboard = ({
         header={
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h3>Listado</h3>
+            <Search
+              placeholder="input search text"
+              allowClear
+              enterButton="Search"
+              size="middle"
+              onSearch={onSearch}
+            />
             <ModalCreateTask
               status={status}
               localGetAllTask={localGetAllTask}
@@ -86,8 +113,7 @@ const TaskListDashboard = ({
                   style={{ color: "green", borderColor: "green" }}
                   onClick={() => {
                     setOpenModal(!openModal);
-                  }}
-                >
+                  }}>
                   Detalle
                 </Button>
 
@@ -119,8 +145,7 @@ const TaskListDashboard = ({
                           });
                       }
                     });
-                  }}
-                >
+                  }}>
                   Delete
                 </Button>
               </ButtonGroup>
