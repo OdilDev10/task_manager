@@ -6,13 +6,19 @@ import Swal from "sweetalert2";
 import { ITask } from "../../../shared/schemas/tasksSchemas";
 import ModalCreateTask from "./ModalCreateTask";
 import ModalDetailTask from "./ModalDetailTask";
+import { disableTask } from "../../../shared/services/taskServices";
+import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 
 const TaskListDashboard = ({
   data,
   pagination,
+  localGetAllTask,
+  status,
 }: {
   data: ITask[];
   pagination: PaginationConfig | undefined;
+  localGetAllTask: (selectedTab: TaskStatusEnum) => void;
+  status: TaskStatusEnum;
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   return (
@@ -62,8 +68,7 @@ const TaskListDashboard = ({
                   style={{ color: "green", borderColor: "green" }}
                   onClick={() => {
                     setOpenModal(!openModal);
-                  }}
-                >
+                  }}>
                   Detalle
                 </Button>
 
@@ -80,15 +85,22 @@ const TaskListDashboard = ({
                       confirmButtonText: "Yes, delete it!",
                     }).then((result) => {
                       if (result.isConfirmed) {
-                        Swal.fire({
-                          title: "Deleted!",
-                          text: "Your file has been deleted.",
-                          icon: "success",
-                        });
+                        disableTask(item.id)
+                          .then((res) => {
+                            console.log(res);
+                            Swal.fire({
+                              title: "Deleted!",
+                              text: "Your file has been deleted.",
+                              icon: "success",
+                            });
+                            localGetAllTask(status);
+                          })
+                          .catch((err) => {
+                            console.log(err);
+                          });
                       }
                     });
-                  }}
-                >
+                  }}>
                   Delete
                 </Button>
               </ButtonGroup>

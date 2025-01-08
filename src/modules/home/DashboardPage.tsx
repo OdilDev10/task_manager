@@ -47,7 +47,7 @@ const DashboardPage = () => {
       console.log(response.data, "users");
       setPagination({
         current: response.pagination.currentPage,
-        pageSize: 5, 
+        pageSize: 5,
         total: response.pagination.totalRecords,
       });
       setAllUsers(dtoUsers(response.data));
@@ -58,7 +58,7 @@ const DashboardPage = () => {
       setAllTasks(dtoTasks(response?.data));
       setPagination({
         current: response.pagination.currentPage,
-        pageSize: 5, 
+        pageSize: 5,
         total: response.pagination.totalRecords,
       });
 
@@ -93,17 +93,38 @@ const DashboardPage = () => {
           {
             key: TaskStatusEnum.COMPLETED,
             label: "Completadas",
-            children: <TaskList listado={allTasks} pagination={pagination} />,
+            children: (
+              <TaskList
+                listado={allTasks}
+                pagination={pagination}
+                localGetAllTask={localGetAllTask}
+                status={TaskStatusEnum.COMPLETED}
+              />
+            ),
           },
           {
             key: TaskStatusEnum.PENDING,
             label: "Pendientes",
-            children: <TaskList listado={allTasks} pagination={pagination} />,
+            children: (
+              <TaskList
+                listado={allTasks}
+                pagination={pagination}
+                localGetAllTask={localGetAllTask}
+                status={TaskStatusEnum.PENDING}
+              />
+            ),
           },
           {
             key: TaskStatusEnum.CANCELLED,
             label: "Canceladas",
-            children: <TaskList listado={allTasks} pagination={pagination} />,
+            children: (
+              <TaskList
+                listado={allTasks}
+                pagination={pagination}
+                localGetAllTask={localGetAllTask}
+                status={TaskStatusEnum.CANCELLED}
+              />
+            ),
           },
           {
             key: "Tab4",
