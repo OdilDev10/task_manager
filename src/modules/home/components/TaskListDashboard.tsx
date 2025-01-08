@@ -7,6 +7,7 @@ import ModalCreateTask from "./ModalCreateTask";
 import ModalDetailTask from "./ModalDetailTask";
 import { disableTask } from "../../../shared/services/taskServices";
 import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
+import { PaginationCustom } from "../DashboardPage";
 
 const TaskListDashboard = ({
   data,
@@ -15,12 +16,7 @@ const TaskListDashboard = ({
   status,
 }: {
   data: ITask[];
-  pagination: {
-    currentPage: number;
-    totalPages: number;
-    limit: number;
-    totalRecords: number;
-  };
+  pagination: PaginationCustom;
   localGetAllTask: (selectedTab: TaskStatusEnum) => void;
   status: TaskStatusEnum;
 }) => {
@@ -76,8 +72,7 @@ const TaskListDashboard = ({
                   style={{ color: "green", borderColor: "green" }}
                   onClick={() => {
                     setOpenModal(!openModal);
-                  }}
-                >
+                  }}>
                   Detalle
                 </Button>
 
@@ -109,8 +104,7 @@ const TaskListDashboard = ({
                           });
                       }
                     });
-                  }}
-                >
+                  }}>
                   Delete
                 </Button>
               </ButtonGroup>

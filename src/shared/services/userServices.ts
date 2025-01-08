@@ -1,9 +1,12 @@
+import { PaginationCustom } from "../../modules/home/DashboardPage";
 import { UserInterface } from "../interfaces/UserInterface";
 import instanceAxios from "./axiosconfig";
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (pagination: PaginationCustom) => {
   try {
-    const allUsers = await instanceAxios.get("users");
+    const allUsers = await instanceAxios.get(
+      `users?page=${pagination.currentPage}&limit=${pagination.limit}&param=${pagination.param}`
+    );
     return allUsers.data;
   } catch (error) {
     console.log(error);
