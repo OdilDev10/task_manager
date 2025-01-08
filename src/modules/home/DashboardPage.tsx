@@ -25,7 +25,7 @@ const DashboardPage = () => {
   );
 
   const dtoTasks = (data: unknown[]): ITask[] => {
-    return data.map((item) => {
+    return data?.map((item) => {
       return TaskSchemaCreate.parse(item); // Valida y transforma
     });
   };
@@ -38,24 +38,24 @@ const DashboardPage = () => {
   };
   const localGetAllUsers = () => {
     getAllUsers().then((response) => {
-      console.log(response.data, "users");
+      console.log(response?.data, "users");
       setPagination({
-        currentPage: response.pagination.currentPage,
+        currentPage: response?.pagination.currentPage,
         limit: response?.pagination?.limit,
-        totalRecords: response.pagination.totalRecords,
-        totalPages: response.pagination.totalPages,
+        totalRecords: response?.pagination.totalRecords,
+        totalPages: response?.pagination.totalPages,
       });
-      setAllUsers(dtoUsers(response.data));
+      setAllUsers(dtoUsers(response?.data));
     });
   };
   const localGetAllTask = (selectedTab: TaskStatusEnum) => {
     getAllTasks(selectedTab).then((response) => {
       setAllTasks(dtoTasks(response?.data));
       setPagination({
-        currentPage: response.pagination.currentPage,
+        currentPage: response?.pagination.currentPage,
         limit: response?.pagination?.limit,
-        totalRecords: response.pagination.totalRecords,
-        totalPages: response.pagination.totalPages,
+        totalRecords: response?.pagination.totalRecords,
+        totalPages: response?.pagination.totalPages,
       });
 
       console.log(response?.data, "data");
