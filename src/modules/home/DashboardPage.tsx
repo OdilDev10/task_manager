@@ -49,12 +49,12 @@ const DashboardPage = () => {
   };
   const localGetAllUsers = () => {
     getAllUsers(pagination).then((response) => {
-      console.log(response??.data, "users");
+      console.log(response?.data, "users");
       setPagination({
         currentPage: response?.pagination.currentPage,
         limit: response?.pagination?.limit,
-        totalRecords: response??.pagination.totalRecords,
-        totalPages: response??.pagination.totalPages,
+        totalRecords: response?.pagination.totalRecords,
+        totalPages: response?.pagination.totalPages,
         param: response?.pagination.param,
       });
       setAllUsers(dtoUsers(response?.data));
@@ -67,8 +67,8 @@ const DashboardPage = () => {
       setPagination({
         currentPage: response?.pagination.currentPage,
         limit: response?.pagination?.limit,
-        totalRecords: response??.pagination.totalRecords,
-        totalPages: response??.pagination.totalPages,
+        totalRecords: response?.pagination.totalRecords,
+        totalPages: response?.pagination.totalPages,
         param: response?.pagination.param,
       });
 
