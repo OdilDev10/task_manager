@@ -9,21 +9,27 @@ const TaskList = ({
   pagination,
   localGetAllTask,
   status,
+  setPagination,
 }: {
   listado: ITask[];
   pagination: PaginationCustom;
-  localGetAllTask: (selectedTab: TaskStatusEnum) => void;
+  localGetAllTask: (
+    selectedTab: TaskStatusEnum,
+    pag?: PaginationCustom
+  ) => void;
   status: TaskStatusEnum;
+  setPagination: React.Dispatch<React.SetStateAction<PaginationCustom>>;
 }) => {
   console.log(listado, "listado");
   return (
     <ContainerTask styles={{ overflowY: "auto", height: "75vh" }}>
-      <div style={{ flex: 3 }}>
+      <div style={{ flex: 3, padding: "1rem" }}>
         <TaskListDashboard
           localGetAllTask={localGetAllTask}
           data={listado}
           pagination={pagination}
           status={status}
+          setPagination={setPagination}
         />
       </div>
     </ContainerTask>

@@ -14,25 +14,39 @@ const TaskListDashboard = ({
   pagination,
   localGetAllTask,
   status,
+  setPagination,
 }: {
   data: ITask[];
   pagination: PaginationCustom;
-  localGetAllTask: (selectedTab: TaskStatusEnum) => void;
+  localGetAllTask: (
+    selectedTab: TaskStatusEnum,
+    pag?: PaginationCustom
+  ) => void;
   status: TaskStatusEnum;
+  setPagination: React.Dispatch<React.SetStateAction<PaginationCustom>>;
 }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   return (
     <>
       <List
         pagination={{
-          showSizeChanger: false,
+          showSizeChanger: true,
           pageSize: pagination?.limit,
-          total: pagination?.totalRecords,
+          total: pagination?.totalRecords, // Total de registros
           current: pagination?.currentPage,
-          onChange: (page) => {
-            console.log("Cambiando a la página:", page);
+          pageSizeOptions: ["2", "5", "10", "20"],
+          showTotal: (total, range) => {
+            return `${range[0]}-${range[1]} de ${total} items`;
           },
-          ...pagination,
+          onChange: (page: number, pageSize: number) => {
+            // Hacer una llamada al backend para obtener los datos de la nueva página
+            localGetAllTask(status, {
+              ...pagination,
+              currentPage: page,
+              limit: pageSize,
+            });
+            console.log("Cambiando a la página:", page, pageSize);
+          },
         }}
         dataSource={data}
         header={
@@ -56,7 +70,7 @@ const TaskListDashboard = ({
               title={item.title}
               description={item.content}
             />
-
+            ID: {item.id}
             <div style={{ display: "flex" }}>
               <ButtonGroup>
                 {/* <Button
@@ -72,7 +86,8 @@ const TaskListDashboard = ({
                   style={{ color: "green", borderColor: "green" }}
                   onClick={() => {
                     setOpenModal(!openModal);
-                  }}>
+                  }}
+                >
                   Detalle
                 </Button>
 
@@ -104,7 +119,8 @@ const TaskListDashboard = ({
                           });
                       }
                     });
-                  }}>
+                  }}
+                >
                   Delete
                 </Button>
               </ButtonGroup>

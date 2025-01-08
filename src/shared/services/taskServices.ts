@@ -1,16 +1,24 @@
 import { PaginationCustom } from "../../modules/home/DashboardPage";
 import TaskStatusEnum from "../enums/TaskStatusEnum";
-import { TaskInterface } from "../interfaces/TaskInterface";
+import { ITask } from "../schemas/tasksSchemas";
 import instanceAxios from "./axiosconfig";
 
 export const getAllTasks = async (
   status: TaskStatusEnum,
   pagination: PaginationCustom
 ) => {
-  console.log(pagination, "pagination");
+  console.log(
+    pagination,
+    "pagination",
+    `tasks?status=${status}&page=${pagination.currentPage}&limit=${
+      pagination.limit
+    }&param=${pagination.param || ""}`
+  );
   try {
     const allTasks = await instanceAxios.get(
-      `tasks?status=${status}&page=${pagination.currentPage}&limit=${pagination.limit}&param=${pagination.param}`
+      `tasks?status=${status}&page=${pagination.currentPage}&limit=${
+        pagination.limit
+      }&param=${pagination.param || ""}`
     );
     return allTasks.data;
   } catch (error) {
@@ -19,7 +27,7 @@ export const getAllTasks = async (
   }
 };
 
-export const postCreateTask = async (data: TaskInterface) => {
+export const postCreateTask = async (data: ITask) => {
   try {
     const task = await instanceAxios.post("tasks", data);
     console.log(task.data, "task");

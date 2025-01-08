@@ -35,9 +35,7 @@ const DashboardPage = () => {
 
   const dtoTasks = (data: unknown[]): ITask[] => {
     return data?.map((item) => {
-      return {
-        ...TaskSchemaCreate.parse(item),
-      }; // Valida y transforma
+      return TaskSchemaCreate.parse(item);
     });
   };
 
@@ -60,8 +58,11 @@ const DashboardPage = () => {
       setAllUsers(dtoUsers(response?.data));
     });
   };
-  const localGetAllTask = (selectedTab: TaskStatusEnum) => {
-    getAllTasks(selectedTab, pagination).then((response) => {
+  const localGetAllTask = (
+    selectedTab: TaskStatusEnum,
+    pag?: PaginationCustom
+  ) => {
+    getAllTasks(selectedTab, pag || pagination).then((response) => {
       console.log(response?.data, "data");
       setAllTasks(dtoTasks(response?.data));
       setPagination({
@@ -91,10 +92,6 @@ const DashboardPage = () => {
     localGetAllUsers();
   };
 
-  useEffect(() => {
-    localGetAllTask(selectedTab);
-  }, [selectedTab]);
-
   return (
     <div>
       <CustomTabs
@@ -106,11 +103,10 @@ const DashboardPage = () => {
             label: "Completadas",
             children: (
               <TaskList
+                setPagination={setPagination}
                 listado={allTasks}
                 pagination={pagination}
-                localGetAllTask={function (selectedTab: TaskStatusEnum): void {
-                  localGetAllTask(selectedTab);
-                }}
+                localGetAllTask={localGetAllTask}
                 status={TaskStatusEnum.COMPLETED}
               />
             ),
@@ -120,12 +116,11 @@ const DashboardPage = () => {
             label: "Pendientes",
             children: (
               <TaskList
+                setPagination={setPagination}
                 listado={allTasks}
                 pagination={pagination}
-                localGetAllTask={function (selectedTab: TaskStatusEnum): void {
-                  localGetAllTask(selectedTab);
-                }}
-                status={TaskStatusEnum.COMPLETED}
+                localGetAllTask={localGetAllTask}
+                status={TaskStatusEnum.PENDING}
               />
             ),
           },
@@ -134,12 +129,11 @@ const DashboardPage = () => {
             label: "Canceladas",
             children: (
               <TaskList
+                setPagination={setPagination}
                 listado={allTasks}
                 pagination={pagination}
-                localGetAllTask={function (selectedTab: TaskStatusEnum): void {
-                  localGetAllTask(selectedTab);
-                }}
-                status={TaskStatusEnum.COMPLETED}
+                localGetAllTask={localGetAllTask}
+                status={TaskStatusEnum.CANCELLED}
               />
             ),
           },

@@ -4,7 +4,6 @@ import TaskStatusEnum from "../enums/TaskStatusEnum";
 // Validación para creación de usuario
 export const TaskSchemaCreate = z.object({
   id: z.number().optional(),
-
   title: z.string().min(2, "Title is required"),
   content: z.string().min(2, "Description is required"),
   createdAt: z
