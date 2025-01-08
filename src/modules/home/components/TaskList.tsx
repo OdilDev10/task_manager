@@ -1,5 +1,6 @@
 import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 import { ITask } from "../../../shared/schemas/tasksSchemas";
+import { PaginationCustom } from "../DashboardPage";
 import ContainerTask from "./ContainerTask";
 import TaskListDashboard from "./TaskListDashboard";
 
@@ -10,15 +11,11 @@ const TaskList = ({
   status,
 }: {
   listado: ITask[];
-  pagination: {
-    currentPage: number;
-    totalPages: number;
-    limit: number;
-    totalRecords: number;
-  };
+  pagination: PaginationCustom;
   localGetAllTask: (selectedTab: TaskStatusEnum) => void;
   status: TaskStatusEnum;
 }) => {
+  console.log(listado, "listado");
   return (
     <ContainerTask styles={{ overflowY: "auto", height: "75vh" }}>
       <div style={{ flex: 3 }}>

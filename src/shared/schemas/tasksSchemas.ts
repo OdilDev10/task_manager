@@ -7,12 +7,6 @@ export const TaskSchemaCreate = z.object({
 
   title: z.string().min(2, "Title is required"),
   content: z.string().min(2, "Description is required"),
-  userId: z.number(),
-  status: z.enum([
-    TaskStatusEnum.PENDING,
-    TaskStatusEnum.CANCELLED,
-    TaskStatusEnum.COMPLETED,
-  ]),
   createdAt: z
     .preprocess(
       (arg) => (typeof arg === "string" ? new Date(arg) : arg),
@@ -28,8 +22,17 @@ export const TaskSchemaCreate = z.object({
       z.null(),
     ])
     .optional(),
+  status: z.enum([
+    TaskStatusEnum.PENDING,
+    TaskStatusEnum.CANCELLED,
+    TaskStatusEnum.COMPLETED,
+  ]),
+  disabled: z.boolean(),
+  disabled_at: z.null(),
+  createdBy: z.number(),
+  updatedBy: z.null(),
+  disabledBy: z.null(),
 });
-
 
 // Validación para actualización de usuario
 export const TaskSchemaUpdate = z.object({

@@ -11,14 +11,23 @@ import { getAllUsers } from "../../shared/services/userServices";
 import TaskList from "./components/TaskList";
 import UserTab from "./components/UserTab";
 
+export interface PaginationCustom {
+  currentPage: number;
+  totalPages: number;
+  limit: number;
+  totalRecords: number;
+  param: string;
+}
+
 const DashboardPage = () => {
   const [allTasks, setAllTasks] = useState<ITask[]>([]);
   const [allUsers, setAllUsers] = useState<IUserRegister[]>([]);
-  const [pagination, setPagination] = useState({
+  const [pagination, setPagination] = useState<PaginationCustom>({
     currentPage: 1,
     totalPages: 1,
-    limit: 10,
+    limit: 2,
     totalRecords: 1,
+    param: "",
   });
   const [selectedTab, setSelectedTab] = useState<TaskStatusEnum>(
     TaskStatusEnum.COMPLETED
@@ -26,7 +35,9 @@ const DashboardPage = () => {
 
   const dtoTasks = (data: unknown[]): ITask[] => {
     return data?.map((item) => {
-      return TaskSchemaCreate.parse(item); // Valida y transforma
+      return {
+        ...TaskSchemaCreate.parse(item),
+      }; // Valida y transforma
     });
   };
 
@@ -37,25 +48,28 @@ const DashboardPage = () => {
     });
   };
   const localGetAllUsers = () => {
-    getAllUsers().then((response) => {
-      console.log(response?.data, "users");
+    getAllUsers(pagination).then((response) => {
+      console.log(response??.data, "users");
       setPagination({
         currentPage: response?.pagination.currentPage,
         limit: response?.pagination?.limit,
-        totalRecords: response?.pagination.totalRecords,
-        totalPages: response?.pagination.totalPages,
+        totalRecords: response??.pagination.totalRecords,
+        totalPages: response??.pagination.totalPages,
+        param: response?.pagination.param,
       });
       setAllUsers(dtoUsers(response?.data));
     });
   };
   const localGetAllTask = (selectedTab: TaskStatusEnum) => {
-    getAllTasks(selectedTab).then((response) => {
+    getAllTasks(selectedTab, pagination).then((response) => {
+      console.log(response?.data, "data");
       setAllTasks(dtoTasks(response?.data));
       setPagination({
         currentPage: response?.pagination.currentPage,
         limit: response?.pagination?.limit,
-        totalRecords: response?.pagination.totalRecords,
-        totalPages: response?.pagination.totalPages,
+        totalRecords: response??.pagination.totalRecords,
+        totalPages: response??.pagination.totalPages,
+        param: response?.pagination.param,
       });
 
       console.log(response?.data, "data");
