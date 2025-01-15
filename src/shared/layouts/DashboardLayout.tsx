@@ -24,15 +24,13 @@ const DashboardLayout = () => {
         flexDirection: "column",
         justifyContent: "space-between",
         gap: "20px",
-      }}
-    >
+      }}>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
           height: "90vh",
-        }}
-      >
+        }}>
         <CustomHeaderPage />
         <div>
           <p style={{ fontWeight: "600", fontSize: "16px" }}>
