@@ -94,7 +94,7 @@ const TaskList = ({
                     onClick={() => {
                       setOpenModal(!openModal);
                     }}>
-                    Detalle
+                    Detalle a
                   </Button>
 
                   <Button
