@@ -41,6 +41,7 @@ const ModalDetailTask = ({
                 console.log(selectedTab);
               }}
               status={TaskStatusEnum.COMPLETED}
+              setIsModalOpen={setOpenModal}
             />
             <Button
               onClick={() => {

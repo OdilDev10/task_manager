@@ -10,6 +10,7 @@ import { getAllTasks } from "../../shared/services/taskServices";
 import { getAllUsers } from "../../shared/services/userServices";
 import TaskList from "./components/TaskList";
 import UserTab from "./components/UserTab";
+import ModalCreateTask from "./components/ModalCreateTask";
 
 export interface PaginationCustom {
   currentPage: number;
@@ -25,13 +26,11 @@ const DashboardPage = () => {
   const [pagination, setPagination] = useState<PaginationCustom>({
     currentPage: 1,
     totalPages: 1,
-    limit: 2,
+    limit: 5,
     totalRecords: 1,
     param: "",
   });
-  const [selectedTab, setSelectedTab] = useState<TaskStatusEnum>(
-    TaskStatusEnum.COMPLETED
-  );
+
 
   const dtoTasks = (data: unknown[]): ITask[] => {
     return data?.map((item) => {
@@ -45,6 +44,7 @@ const DashboardPage = () => {
       return UserRegisterSchema.parse(item); // Valida y transforma
     });
   };
+
   const localGetAllUsers = () => {
     getAllUsers(pagination).then((response) => {
       console.log(response?.data, "users");
@@ -58,6 +58,7 @@ const DashboardPage = () => {
       setAllUsers(dtoUsers(response?.data));
     });
   };
+
   const localGetAllTask = (
     selectedTab: TaskStatusEnum,
     pag?: PaginationCustom
@@ -84,7 +85,6 @@ const DashboardPage = () => {
       e == TaskStatusEnum.PENDING ||
       e == TaskStatusEnum.COMPLETED
     ) {
-      setSelectedTab(e);
       localGetAllTask(e);
       console.log(e);
       return;
@@ -102,39 +102,58 @@ const DashboardPage = () => {
             key: TaskStatusEnum.COMPLETED,
             label: "Completadas",
             children: (
-              <TaskList
-                setPagination={setPagination}
-                listado={allTasks}
-                pagination={pagination}
-                localGetAllTask={localGetAllTask}
-                status={TaskStatusEnum.COMPLETED}
-              />
+              <div>
+                <ModalCreateTask
+                  status={TaskStatusEnum.COMPLETED}
+                  localGetAllTask={localGetAllTask}
+                  pagination={pagination}
+                />
+                <TaskList
+                  listado={allTasks}
+                  pagination={pagination}
+                  localGetAllTask={localGetAllTask}
+                  status={TaskStatusEnum.COMPLETED}
+                />
+              </div>
             ),
           },
           {
             key: TaskStatusEnum.PENDING,
             label: "Pendientes",
             children: (
-              <TaskList
-                setPagination={setPagination}
-                listado={allTasks}
-                pagination={pagination}
-                localGetAllTask={localGetAllTask}
-                status={TaskStatusEnum.PENDING}
-              />
+              <div>
+                <ModalCreateTask
+                  status={TaskStatusEnum.PENDING}
+                  localGetAllTask={localGetAllTask}
+                  pagination={pagination}
+                />
+
+                <TaskList
+                  listado={allTasks}
+                  pagination={pagination}
+                  localGetAllTask={localGetAllTask}
+                  status={TaskStatusEnum.PENDING}
+                />
+              </div>
             ),
           },
           {
             key: TaskStatusEnum.CANCELLED,
             label: "Canceladas",
             children: (
-              <TaskList
-                setPagination={setPagination}
-                listado={allTasks}
-                pagination={pagination}
-                localGetAllTask={localGetAllTask}
-                status={TaskStatusEnum.CANCELLED}
-              />
+              <div>
+                <ModalCreateTask
+                  status={TaskStatusEnum.CANCELLED}
+                  localGetAllTask={localGetAllTask}
+                  pagination={pagination}
+                />
+                <TaskList
+                  listado={allTasks}
+                  pagination={pagination}
+                  localGetAllTask={localGetAllTask}
+                  status={TaskStatusEnum.CANCELLED}
+                />
+              </div>
             ),
           },
           {

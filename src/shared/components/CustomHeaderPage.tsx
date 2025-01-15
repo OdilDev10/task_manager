@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Flex, Button } from "antd";
 import Swal from "sweetalert2";
+import { LogoutOutlined } from "@ant-design/icons";
 
 const CustomHeaderPage = () => {
   const navigate = useNavigate();
@@ -29,8 +30,12 @@ const CustomHeaderPage = () => {
       </div>
       <div>
         <Flex gap="small" wrap>
-          <Button onClick={signOut} type="primary">
-            Cerrar sesión
+          <Button
+            onClick={signOut}
+            type="primary"
+            style={{ background: "red" }}
+          >
+            <LogoutOutlined />
           </Button>
         </Flex>
       </div>
