@@ -16,15 +16,6 @@ type SearchProps = GetProps<typeof Input.Search>;
 
 const { Search } = Input;
 
-const suffix = (
-  <AudioOutlined
-    style={{
-      fontSize: 16,
-      color: "#1677ff",
-    }}
-  />
-);
-
 const TaskListDashboard = ({
   data,
   pagination,
@@ -85,6 +76,7 @@ const TaskListDashboard = ({
             <ModalCreateTask
               status={status}
               localGetAllTask={localGetAllTask}
+              pagination={pagination}
             />
           </div>
         }
@@ -116,7 +108,8 @@ const TaskListDashboard = ({
                   style={{ color: "green", borderColor: "green" }}
                   onClick={() => {
                     setOpenModal(!openModal);
-                  }}>
+                  }}
+                >
                   Detalle
                 </Button>
 
@@ -148,7 +141,8 @@ const TaskListDashboard = ({
                           });
                       }
                     });
-                  }}>
+                  }}
+                >
                   Delete
                 </Button>
               </ButtonGroup>

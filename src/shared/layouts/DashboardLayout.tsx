@@ -34,9 +34,22 @@ const DashboardLayout = () => {
         }}
       >
         <CustomHeaderPage />
-        <div>
-          <p style={{ fontWeight: "600", fontSize: "16px" }}>
-            User: {globalUser?.name} {globalUser?.lastName} ID: {globalUser?.id}
+        <div style={{
+          
+        }}>
+          <p
+            style={{
+              fontWeight: "600",
+              fontSize: "16px",
+              display: "flex",
+              flexDirection: "column",
+              gap: '4px'
+            }}
+          >
+            <span>
+              User: {globalUser?.name} {globalUser?.lastName}{" "}
+            </span>
+            <span>ID: {globalUser?.id}</span>
           </p>
         </div>
         <div style={{ height: "95%" }}>

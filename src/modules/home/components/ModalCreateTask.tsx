@@ -6,29 +6,23 @@ import { AudioOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import type { GetProps } from "antd";
 import Swal from "sweetalert2";
+import { PaginationCustom } from "../DashboardPage";
 
 type SearchProps = GetProps<typeof Input.Search>;
 
 const { Search } = Input;
 
-const suffix = (
-  <AudioOutlined
-    style={{
-      fontSize: 16,
-      color: "#1677ff",
-    }}
-  />
-);
-
-const onSearch: SearchProps["onSearch"] = (value, _e, info) =>
-  console.log(info?.source, value);
-
 const ModalCreateTask = ({
   localGetAllTask,
   status,
+  pagination,
 }: {
-  localGetAllTask: (selectedTab: TaskStatusEnum) => void;
+  localGetAllTask: (
+    selectedTab: TaskStatusEnum,
+    pag?: PaginationCustom
+  ) => void;
   status: TaskStatusEnum;
+  pagination: PaginationCustom;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -41,6 +35,12 @@ const ModalCreateTask = ({
 
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
+    console.log(value);
+
+    localGetAllTask(status, pagination);
   };
 
   return (
@@ -79,7 +79,8 @@ const ModalCreateTask = ({
         title="Agregar Tarea"
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={handleCancel}>
+        onCancel={handleCancel}
+      >
         <FormTask
           localGetAllTask={localGetAllTask}
           status={status}

@@ -46,6 +46,7 @@ const DashboardPage = () => {
       return UserRegisterSchema.parse(item); // Valida y transforma
     });
   };
+
   const localGetAllUsers = () => {
     getAllUsers(pagination).then((response) => {
       console.log(response?.data, "users");
@@ -59,6 +60,7 @@ const DashboardPage = () => {
       setAllUsers(dtoUsers(response?.data));
     });
   };
+
   const localGetAllTask = (
     selectedTab: TaskStatusEnum,
     pag?: PaginationCustom
@@ -104,16 +106,17 @@ const DashboardPage = () => {
             label: "Completadas",
             children: (
               <div>
-              <ModalCreateTask
-                status={TaskStatusEnum.COMPLETED}
-                localGetAllTask={localGetAllTask}
-              />
-              <TaskList
-                listado={allTasks}
-                pagination={pagination}
-                localGetAllTask={localGetAllTask}
-                status={TaskStatusEnum.COMPLETED}
-              />
+                <ModalCreateTask
+                  status={TaskStatusEnum.COMPLETED}
+                  localGetAllTask={localGetAllTask}
+                  pagination={pagination}
+                />
+                <TaskList
+                  listado={allTasks}
+                  pagination={pagination}
+                  localGetAllTask={localGetAllTask}
+                  status={TaskStatusEnum.COMPLETED}
+                />
               </div>
             ),
           },
@@ -125,6 +128,7 @@ const DashboardPage = () => {
                 <ModalCreateTask
                   status={TaskStatusEnum.PENDING}
                   localGetAllTask={localGetAllTask}
+                  pagination={pagination}
                 />
 
                 <TaskList
@@ -141,16 +145,17 @@ const DashboardPage = () => {
             label: "Canceladas",
             children: (
               <div>
-              <ModalCreateTask
-                status={TaskStatusEnum.CANCELLED}
-                localGetAllTask={localGetAllTask}
-              />
-              <TaskList
-                listado={allTasks}
-                pagination={pagination}
-                localGetAllTask={localGetAllTask}
-                status={TaskStatusEnum.CANCELLED}
-              />
+                <ModalCreateTask
+                  status={TaskStatusEnum.CANCELLED}
+                  localGetAllTask={localGetAllTask}
+                  pagination={pagination}
+                />
+                <TaskList
+                  listado={allTasks}
+                  pagination={pagination}
+                  localGetAllTask={localGetAllTask}
+                  status={TaskStatusEnum.CANCELLED}
+                />
               </div>
             ),
           },
