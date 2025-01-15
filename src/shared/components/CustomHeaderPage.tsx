@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { Flex, Button } from "antd";
 import Swal from "sweetalert2";
-import { LogoutOutlined } from "@ant-design/icons";
+import { LogoutOutlined, MoonOutlined, SunOutlined } from "@ant-design/icons";
+import { useTheme } from "../../context/ThemeContext";
 
 const CustomHeaderPage = () => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   const signOut = () => {
     Swal.fire({
@@ -31,10 +33,15 @@ const CustomHeaderPage = () => {
       <div>
         <Flex gap="small" wrap>
           <Button
+            onClick={() => {
+              toggleTheme();
+            }}>
+            {theme == "light" ? <MoonOutlined /> : <SunOutlined />}
+          </Button>
+          <Button
             onClick={signOut}
             type="primary"
-            style={{ background: "red" }}
-          >
+            style={{ background: "red" }}>
             <LogoutOutlined />
           </Button>
         </Flex>
