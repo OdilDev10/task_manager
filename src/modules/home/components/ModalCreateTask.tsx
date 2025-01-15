@@ -1,12 +1,11 @@
-import { Button, Modal } from "antd";
-import { useState } from "react";
-import FormTask from "./FormTask";
-import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
-import { AudioOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { Input } from "antd";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import type { GetProps } from "antd";
+import { Button, Input, Modal } from "antd";
+import { useState } from "react";
 import Swal from "sweetalert2";
+import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 import { PaginationCustom } from "../DashboardPage";
+import FormTask from "./FormTask";
 
 type SearchProps = GetProps<typeof Input.Search>;
 
@@ -37,7 +36,7 @@ const ModalCreateTask = ({
     setIsModalOpen(false);
   };
 
-  const onSearch: SearchProps["onSearch"] = (value, _e, info) => {
+  const onSearch: SearchProps["onSearch"] = (value, _e, _info) => {
     console.log(value);
 
     localGetAllTask(status, pagination);

@@ -30,9 +30,7 @@ const DashboardPage = () => {
     totalRecords: 1,
     param: "",
   });
-  const [selectedTab, setSelectedTab] = useState<TaskStatusEnum>(
-    TaskStatusEnum.COMPLETED
-  );
+
 
   const dtoTasks = (data: unknown[]): ITask[] => {
     return data?.map((item) => {
@@ -87,7 +85,6 @@ const DashboardPage = () => {
       e == TaskStatusEnum.PENDING ||
       e == TaskStatusEnum.COMPLETED
     ) {
-      setSelectedTab(e);
       localGetAllTask(e);
       console.log(e);
       return;
