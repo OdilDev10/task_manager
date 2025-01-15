@@ -1,7 +1,7 @@
-import { Button, Form, Input, Radio } from "antd";
+import { Button, Form, Input } from "antd";
+import Swal from "sweetalert2";
 import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 import { postCreateTask } from "../../../shared/services/taskServices";
-import Swal from "sweetalert2";
 
 const FormTask = ({
   localGetAllTask,
@@ -102,7 +102,7 @@ const FormTask = ({
           />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           name={"status"}
           label={"Status"}
           rules={[
@@ -130,7 +130,7 @@ const FormTask = ({
               Cancelled
             </Radio>
           </Radio.Group>
-        </Form.Item>
+        </Form.Item> */}
         <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
           Send
         </Button>

@@ -1,13 +1,13 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
-import type { GetProps } from "antd";
 import { Button, Input, Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 import { PaginationCustom } from "../DashboardPage";
 import FormTask from "./FormTask";
+import { SearchProps } from "antd/es/input";
 
-type SearchProps = GetProps<typeof Input.Search>;
+// type SearchProps = GetProps<typeof Input.Search>;
 
 const { Search } = Input;
 
@@ -24,6 +24,7 @@ const ModalCreateTask = ({
   pagination: PaginationCustom;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchParam, setSearchParam] = useState("");
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -36,12 +37,22 @@ const ModalCreateTask = ({
     setIsModalOpen(false);
   };
 
-  const onSearch: SearchProps["onSearch"] = (value, _e, _info) => {
-    console.log(value);
+  // const onSearch: SearchProps["onSearch"] = (value, _e, _info) => {
+  //   console.log(value);
+  //   setSearchParam(value)
 
-    localGetAllTask(status, pagination);
-  };
+  //   localGetAllTask(status, { ...pagination, param: value });
+  // };
 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      if (searchParam.trim() !== "") {
+        localGetAllTask(status, { ...pagination, param: searchParam });
+      }
+    }, 600);
+
+    return () => clearTimeout(timerId);
+  }, [searchParam]);
   return (
     <div
       style={{
@@ -55,12 +66,15 @@ const ModalCreateTask = ({
       <Button type="primary" onClick={showModal}>
         Agregar
       </Button>
-      <Search
+      <Input
         placeholder="Search..."
-        allowClear
-        enterButton="Search"
+        // allowClear
+        // enterButton="Search"
         size="middle"
-        onSearch={onSearch}
+        // onSearch={onSearch}
+        onChange={(e: any) => {
+          setSearchParam(e.target.value);
+        }}
       />
 
       <InfoCircleOutlined
