@@ -86,7 +86,12 @@ const TaskList = ({
                   description={
                     <span style={{ color: "#6b6b6b" }}>{item.content}</span>
                   }
+                  style={{
+                    flex: "1",
+                    minWidth: "400px",
+                  }}
                 />
+
                 <div style={{ display: "flex", gap: "10px" }}>
                   <Button
                     type="primary"
