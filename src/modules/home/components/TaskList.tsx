@@ -70,6 +70,7 @@ const TaskList = ({
                   borderRadius: "8px",
                   margin: "8px 0",
                   boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                  gap: "10px",
                 }}>
                 <List.Item.Meta
                   avatar={
@@ -88,7 +89,8 @@ const TaskList = ({
                   }
                   style={{
                     flex: "1",
-                    minWidth: "400px",
+                    minWidth: "200px",
+                    flexWrap: "wrap",
                   }}
                 />
 
