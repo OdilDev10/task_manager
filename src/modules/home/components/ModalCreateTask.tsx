@@ -35,7 +35,6 @@ const ModalCreateTask = ({
   const showModal = () => {
     setIsModalOpen(true);
   };
-
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -80,9 +79,12 @@ const ModalCreateTask = ({
         title="Agregar Tarea"
         open={isModalOpen}
         onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <FormTask localGetAllTask={localGetAllTask} status={status} />
+        onCancel={handleCancel}>
+        <FormTask
+          localGetAllTask={localGetAllTask}
+          status={status}
+          setIsModalOpen={setIsModalOpen}
+        />
       </Modal>
     </div>
   );

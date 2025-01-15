@@ -1,13 +1,16 @@
 import { Button, Form, Input, Radio } from "antd";
 import TaskStatusEnum from "../../../shared/enums/TaskStatusEnum";
 import { postCreateTask } from "../../../shared/services/taskServices";
+import Swal from "sweetalert2";
 
 const FormTask = ({
   localGetAllTask,
   status,
+  setIsModalOpen,
 }: {
   localGetAllTask: (selectedTab: TaskStatusEnum) => void;
   status: TaskStatusEnum;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [form] = Form.useForm();
 
@@ -28,6 +31,12 @@ const FormTask = ({
     form.resetFields();
     alert("Status: " + status);
     localGetAllTask(status);
+    setIsModalOpen(false);
+    Swal.fire({
+      timer: 4000,
+      title: "Tarea agregada",
+      text: "Has agregado la tarea exitosamente",
+    });
   };
 
   return (
@@ -42,8 +51,7 @@ const FormTask = ({
           justifyContent: "center",
           alignItems: "center",
         }}
-        layout="vertical"
-      >
+        layout="vertical">
         <Form.Item
           name={"title"}
           label={"Title"}
@@ -59,8 +67,7 @@ const FormTask = ({
               message: "Only letters and spaces are allowed",
             },
           ]}
-          style={{ width: "100%" }}
-        >
+          style={{ width: "100%" }}>
           <Input />
         </Form.Item>
         <Form.Item
@@ -88,8 +95,7 @@ const FormTask = ({
               message: "Description must have at least 10 characters",
             },
           ]}
-          style={{ width: "100%" }}
-        >
+          style={{ width: "100%" }}>
           <Input.TextArea
             size="large"
             style={{ height: "200px", maxHeight: "350px" }}
@@ -112,8 +118,7 @@ const FormTask = ({
             //     "Only letters, numbers, and spaces are allowed",
             // },
             { required: true, message: "Status is required" },
-          ]}
-        >
+          ]}>
           <Radio.Group>
             <Radio value="COMPLETED" style={{ color: "var(--primary-color)" }}>
               Completed
