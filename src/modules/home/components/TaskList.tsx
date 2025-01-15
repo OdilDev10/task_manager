@@ -112,7 +112,7 @@ const TaskList = ({
                     flex: "1",
                     minWidth: "400px",
                   }}
-                />
+                /> 
 
                 <div style={{ display: "flex", gap: "10px" }}>
                   <Button
